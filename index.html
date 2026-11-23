@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is the Planet Warming?</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday learning tool, calm and exact
+   IDEA a climate record sheet: a deep slate band, a white working sheet below
+   PICTURE the explorer itself; the header carries one stripe per year of the record
+   COLOUR slate band, white sheet, blue-to-red for cool-to-warm years
+   TYPE Archivo 800 titles + Inter text
+   LAYOUT band with title left, year stripes right; tabs; controls above a large chart */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#101418);--ink:light-dark(#12181d,#e8edf2);--mute:light-dark(#596470,#9fa9b5);--line:light-dark(#dfe4ea,#28313b);--panel:light-dark(#f4f6f8,#171d24);--night:light-dark(#1d2a35,#0b1116);--acc:light-dark(#b03a1a,#ff8a5c);--cool:light-dark(#2c6fb5,#6fa8e0);--warm:light-dark(#b03a1a,#ff8a5c);--s1:light-dark(#b03a1a,#ff8a5c);--s2:light-dark(#2c6fb5,#6fa8e0);--s3:light-dark(#127f86,#4cc9cf);--s4:light-dark(#8a6b00,#e0b542);--s5:light-dark(#7b4bbf,#bfa0ef);--s6:light-dark(#596470,#9fa9b5);--s7:light-dark(#b8366f,#f27bb0);--s8:light-dark(#6d5130,#cfa677)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Archivo,Inter,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0}
+.top{background:var(--night);color:#fff;padding:28px max(4vw,16px) 0}
+.topin{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+.top h1{font-size:clamp(32px,4.4vw,48px);font-weight:800}
+.top p{margin:6px 0 0;color:#c3d0da;font-size:16px}
+#stripes{height:46px;width:min(420px,38vw);border-radius:4px;overflow:hidden;margin-bottom:4px}
+nav{max-width:1240px;margin:22px auto 0;display:flex;gap:4px;flex-wrap:wrap}
+nav button{font:600 15px Inter,sans-serif;background:transparent;color:#c3d0da;border:0;border-radius:10px 10px 0 0;padding:12px 18px;min-height:44px;cursor:pointer}
+nav button[aria-selected=true]{background:var(--bg);color:var(--ink)}
+nav button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--cool);outline-offset:2px}
+nav button .lk{font-size:12px;opacity:.75;margin-left:6px}
+main{max-width:1240px;margin:0 auto;padding:28px max(4vw,16px) 64px}
+section[hidden]{display:none}
+h2{font-size:32px;margin-bottom:12px}
+h3{font-size:20px;margin:26px 0 8px}
+p{max-width:70ch}
+.mute{color:var(--mute)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{font-weight:600;background:var(--panel)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scroll{overflow-x:auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:500;color:var(--mute)}
+label.inl{flex-direction:row;align-items:center;gap:8px;color:var(--ink);min-height:44px}
+select,input[type=number],input[type=text],textarea{font:16px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;min-height:44px}
+input[type=number]{width:7em}
+input[type=range]{width:170px;min-height:44px;accent-color:var(--acc);background:none;border:0;padding:0}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--cool)}
+textarea{width:100%;min-height:96px;resize:vertical}
+button.b{font:600 15px Inter,sans-serif;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:10px 16px;min-height:44px;cursor:pointer}
+button.b:hover{border-color:var(--mute)}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+button.pri:disabled{opacity:.45;cursor:not-allowed}
+.count{font-weight:600}
+.filt summary{cursor:pointer;font-weight:600;min-height:32px}
+#filters{margin:0 0 16px}
+.pager{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+th.sort{cursor:pointer}
+#tbl td{white-space:nowrap}
+td code{white-space:nowrap}
+.fig.tall{min-height:580px}
+.fig.grab{cursor:grab}
+.fig.grab:active{cursor:grabbing}
+.fig{position:relative;min-height:470px;margin-top:16px;border:1px solid var(--line);border-radius:12px}
+.fig canvas{position:absolute;inset:0;width:100%;height:100%}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:2}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:14px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.pred{border-left:5px solid var(--acc);background:var(--panel);border-radius:0 12px 12px 0;padding:10px 16px;margin-bottom:18px}
+.readout{font-family:Archivo,sans-serif;font-size:clamp(26px,3.4vw,38px);font-weight:800;line-height:1.1;margin-top:4px}
+.readout small{display:block;font:500 14px Inter,sans-serif;color:var(--mute);letter-spacing:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px}
+code{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:14px}
+.err{color:var(--acc);font-weight:600}
+.dlg{display:none;margin-top:14px}
+.dlg.on{display:block}
+.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px}
+.small{font-size:14px}
+footer{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px) 40px;font-size:14px;color:var(--mute)}
+footer button{font:inherit;color:var(--mute);background:none;border:0;text-decoration:underline;cursor:pointer;padding:0}
+@media(max-width:760px){.grid2{grid-template-columns:minmax(0,1fr)}.topin{grid-template-columns:minmax(0,1fr)}#stripes{width:100%}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <div>
+      <h1>Is the Planet Warming?</h1>
+      <p>Temperature records for fourteen places, 1895&ndash;2025. One question, four stages: state your position, explore, argue the other side, then find out what holds.</p>
+    </div>
+    <div id="stripes" aria-hidden="true"></div>
+  </div>
+  <nav role="tablist" id="tabs">
+    <button role="tab" data-t="about">About the data</button>
+    <button role="tab" data-t="hyp">1. My position</button>
+    <button role="tab" data-t="table" data-lock>Table</button>
+    <button role="tab" data-t="plot" data-lock>Plot</button>
+    <button role="tab" data-t="stats" data-lock>Statistics</button>
+    <button role="tab" data-t="calc" data-lock>Calculator</button>
+    <button role="tab" data-t="other" data-lock>2. The other side</button>
+    <button role="tab" data-t="stress" data-lock>3. Stress test</button>
+    <button role="tab" data-t="stands" data-lock>4. What stands</button>
+  </nav>
+</header>
+
+<main>
+<div id="predbar"></div>
+
+<section id="about">
+  <h2>About the data</h2>
+  <div class="grid2">
+    <div>
+      <p>Each row is one reading: a place, a year, and the average temperature over that whole year, in degrees Fahrenheit. There are <span id="nrows">1,834</span> readings covering 1895 to 2025, published by NOAA's National Centers for Environmental Information: the six US places come from the <b>U.S. Climate Divisional Database</b>, the six continents and two polar regions from <b>Climate at a Glance Global</b>. There is nothing in this file about greenhouse gases; that question has a tool of its own.</p>
+      <p>The same quantity appears for fourteen places:</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>year</code>, <code>decade</code></td><td>The year of the reading, and the decade it falls in</td></tr>
+          <tr><td><code>location</code></td><td>Six places in the United States &mdash; Onslow County &middot; North Carolina &middot; California &middot; Kansas &middot; New Mexico &middot; Contiguous U.S. &mdash; six continents &mdash; North America &middot; South America &middot; Europe &middot; Africa &middot; Asia &middot; Oceania &mdash; and the two polar regions, Arctic and Antarctic. Onslow County is one county in North Carolina. The list runs from a single county up to whole continents, so the area being averaged grows by a factor of millions from one end to the other.</td></tr>
+          <tr><td><code>temp_f</code></td><td>Average temperature over the year, in &deg;F. <b>Blank for the continents and the poles</b> &mdash; NOAA publishes those only as departures, not as absolute temperatures, so any fit against <code>temp_f</code> uses the 786 US rows alone</td></tr>
+          <tr><td><code>anomaly_f</code></td><td>The reading measured against that place's own 1901&ndash;2000 average. Onslow's average over that century was 61.59 &deg;F, New Mexico's was 52.86 &deg;F and the nation's was 52.01 &deg;F, so this column lets places with different climates be put on one axis. <b>This is the only column that covers all fourteen places</b>, and the one to use when comparing them. The continent and polar values were published in &deg;C and converted here by multiplying by 1.8; the baseline period is the same 1901&ndash;2000 either way.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small mute">These are area averages built from thousands of weather stations, adjusted for station moves and instrument changes and interpolated onto a grid. They are not the raw readings from any single thermometer. The continent series are land only, so they leave out the oceans that cover most of the planet. The two polar series deserve more caution than the rest: there were very few instruments at either pole before the late 1950s, so their early values lean heavily on interpolation between distant stations. For the Antarctic, NOAA's land and land-and-ocean series are identical figure for figure, which tells you the region as drawn here carries no separate ocean measurement at all.</p>
+      <h3>What each region covers</h3>
+      <p class="small">NOAA builds the continents and poles from the 5&deg; &times; 5&deg; grid cells whose centre points fall in each region, then weights them by area. It does not publish the boundary polygons, so the descriptions below are each region's conventional extent rather than an exact specification. A 5&deg; cell is roughly 550 km across, which is coarse enough to matter at a coastline or a border.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Region</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Onslow County</td><td>One county on the North Carolina coast, about 2,100 km&sup2;</td></tr>
+          <tr><td>North Carolina &middot; California &middot; Kansas &middot; New Mexico</td><td>Whole states. California and New Mexico are dry and largely western; Kansas is mid-continental; North Carolina is coastal Southeast</td></tr>
+          <tr><td>Contiguous U.S.</td><td>The lower 48. Excludes Alaska and Hawaii</td></tr>
+          <tr><td>North America</td><td>Canada, the United States, Mexico and Central America. Most Caribbean islands are too small to claim a grid cell</td></tr>
+          <tr><td>South America</td><td>Colombia and Venezuela south to Tierra del Fuego</td></tr>
+          <tr><td>Europe</td><td>Land west of the Urals and the Caucasus, including European Russia. The eastern limit is drawn coarsely at this resolution</td></tr>
+          <tr><td>Africa</td><td>The whole continent, from the Mediterranean coast to the Cape</td></tr>
+          <tr><td>Asia</td><td>Siberia, the Middle East, Central and South Asia, China, Japan and Southeast Asia</td></tr>
+          <tr><td>Oceania</td><td>In practice Australia, New Guinea and New Zealand. Australia alone is about 85% of the region's land, and almost no Pacific island is large enough to produce a grid cell whose centre sits on land</td></tr>
+          <tr><td>Arctic</td><td>The high northern latitudes &mdash; northern Canada, Greenland, northern Scandinavia and northern Siberia</td></tr>
+          <tr><td>Antarctic</td><td>Antarctica</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small mute"><b>These regions overlap, so they cannot be added up or treated as independent.</b> Onslow County sits inside North Carolina, which sits inside the contiguous U.S., which sits inside North America. The Arctic covers land that is also counted in North America, Europe and Asia. Fourteen rows for one year are not fourteen separate measurements of that year, and a result that holds in all fourteen is not fourteen independent confirmations of it.</p>
+      <h3>What to do</h3>
+      <p>Start with <b>My hypothesis</b>. Once you lock it in, the Table, Plot, Statistics and Calculator tabs open. How you use them is up to you.</p>
+      <p><b>Stuck? Phone a friend.</b> Post a question in the class discussion thread, or ask your instructor.</p>
+      <p class="small mute">Sources: temperatures from NOAA National Centers for Environmental Information, Climate at a Glance. Greenhouse gases from NOAA Global Monitoring Laboratory (Mauna Loa and global annual means) and the Law Dome ice core, Rubino et al. 2019, via NOAA/World Data Service for Paleoclimatology. Retrieved November 2026.</p>
+    </div>
+    <div>
+      <h3 style="margin-top:0">A note on the filters</h3>
+      <p>The <b>Filters</b> panel sits above every view. The year range there decides which part of the record everything else is computed from, so narrowing it changes every chart and every statistic on the page.</p>
+      <h3>A note on the calculator</h3>
+      <p>The Calculator makes new columns from existing ones, for all 523 readings at once. <code>meanBy</code> is the useful one here: <code>meanBy("temp_f", "location", "decade")</code> gives each reading the average for its own place and decade.</p>
+      <h3>Reading a slope</h3>
+      <p class="small">If you work out a rate of change, the usual unit for temperature records is degrees Fahrenheit per decade. A slope of +0.5 &deg;F per decade means the line rises half a degree every ten years, which would be about 5 &deg;F per century if it held.</p>
+    </div>
+  </div>
+</section>
+
+<section id="hyp" hidden>
+  <h2>My position</h2>
+  <div id="hypform">
+    <p>Before you look at any data, write down what you think is true. You can't change this after you lock it in. Stage 2 will assign you the opposite position to argue, so answer honestly rather than strategically.</p>
+    <p class="small mute">This file holds annual temperatures for fourteen places, from a single county up to whole continents and the two poles. It holds nothing about why temperatures do what they do &mdash; that question is a separate exercise.</p>
+    <div class="panel" style="max-width:800px">
+      <fieldset style="border:0;padding:0;margin:0 0 18px">
+        <legend style="font-size:15px;font-weight:500;margin-bottom:6px">1. Which is closer to what you believe?</legend>
+        <label class="inl" style="min-height:34px"><input type="radio" name="hpos" value="warming"> These temperature records show clear warming</label><br>
+        <label class="inl" style="min-height:34px"><input type="radio" name="hpos" value="little"> These temperature records show little or no warming</label>
+      </fieldset>
+      <label for="htext">2. Why do you think that?</label>
+      <textarea id="htext" placeholder="Write your hypothesis here"></textarea>
+      <div class="row" style="margin-top:16px">
+        <label for="hnum">3. Over the last 100 years, I think the average temperature in these records has changed by
+          <span class="row" style="gap:8px;align-items:center"><input type="number" id="hnum" step="0.1"><span style="color:var(--ink)">&deg;F</span></span>
+        </label>
+      </div>
+      <p class="small mute" style="margin-top:4px">Enter a negative number for cooling, 0 for no change.</p>
+      <label for="hchange" style="margin-top:12px">4. What result would change your mind?</label>
+      <textarea id="hchange" placeholder="Be specific. What would you have to see in this data to decide you were wrong?"></textarea>
+      <p class="small mute">The last question is the one that matters most. Answer it before you look.</p>
+      <button class="b pri" id="lockbtn" disabled>Lock in my hypothesis</button>
+      <div class="dlg" id="lockdlg">
+        <p><b>Lock it in?</b> None of your answers can be changed afterward, and your assigned side in stage 2 is the opposite of the position you picked.</p>
+        <div class="row"><button class="b pri" id="lockyes">Yes, lock it in</button><button class="b" id="lockno">Not yet</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="hypdone" hidden>
+    <p>Your position is locked. Copy it into the discussion board as your first post, then go to the Table, Plot, Statistics and Calculator tabs and look at the record.</p>
+    <div class="pred" id="hypcard"></div>
+    <div class="row"><button class="b pri" id="copyhyp">Copy my prediction</button><span id="copied" class="mute"></span></div>
+    <textarea id="copybox" readonly style="margin-top:12px;display:none"></textarea>
+  </div>
+</section>
+
+<div id="filters" hidden>
+  <details class="panel filt">
+    <summary>Filters &middot; <span class="count" id="fcount"></span></summary>
+    <div class="row" style="margin-top:12px" id="fbox"></div>
+  </details>
+</div>
+
+<section id="table" hidden>
+  <h2>Table</h2>
+  <div class="scroll" id="tbl"></div>
+  <div class="pager"><button class="b" id="prev">Previous</button><span id="pginfo" class="mute"></span><button class="b" id="next">Next</button></div>
+</section>
+
+<section id="plot" hidden>
+  <h2>Plot</h2>
+  <div class="panel"><div class="row" id="pctl"></div></div>
+  <div class="fig" id="fig"><canvas id="cv"></canvas><div class="tip" id="tip"></div></div>
+  <div class="legend" id="legend"></div>
+  <div id="fitout"></div>
+  <p class="small mute" id="cap"></p>
+</section>
+
+<section id="stats" hidden>
+  <h2>Statistics</h2>
+  <div class="panel"><div class="row">
+    <label for="sval">Values from<select id="sval"></select></label>
+    <label for="sgrp">Grouped by<select id="sgrp"></select></label>
+    <label for="sgrp2">and by<select id="sgrp2"></select></label>
+    <button class="b" id="scopy">Copy table</button><span id="scopied" class="mute small"></span>
+  </div></div>
+  <div class="scroll" id="stbl" style="margin-top:16px"></div>
+  <p class="small mute">SD is the standard deviation. SE is the standard error of the mean (SD divided by the square root of n).</p>
+</section>
+
+<section id="calc" hidden>
+  <h2>Calculator</h2>
+  <p>Make a new column from existing ones. It appears in every tab, and is calculated for all 1,834 readings.</p>
+  <div class="panel">
+    <div class="row">
+      <label for="cname">New column name<input type="text" id="cname" placeholder="e.g. temp_c" style="width:15em"></label>
+      <label for="cexpr" style="flex:1 1 360px">Formula<input type="text" id="cexpr" placeholder="e.g. (temp_f - 32) * 5 / 9"></label>
+      <button class="b pri" id="cadd">Add column</button>
+    </div>
+    <p id="cerr" class="err small"></p>
+    <details class="small"><summary style="cursor:pointer;min-height:32px"><b>What you can use in a formula</b></summary>
+      <ul>
+        <li>Any column name, such as <code>temp_f</code> or <code>year</code></li>
+        <li>Arithmetic: <code>+ - * / ( )</code> and powers with <code>**</code></li>
+        <li>Comparisons give 1 (true) or 0 (false): <code>location == "Onslow County"</code>, <code>year &gt; 1975</code></li>
+        <li>Choices: <code>condition ? a : b</code>, for example <code>year &lt; 1960 ? "early" : "late"</code></li>
+        <li>Functions: <code>log(x)</code> (natural), <code>log10(x)</code>, <code>sqrt(x)</code>, <code>abs(x)</code>, <code>round(x)</code></li>
+        <li><code>mean("temp_f")</code>: the mean of a column over all rows</li>
+        <li><code>meanBy("temp_f", "location")</code>: for each row, the mean of temp_f over all rows that share its location. You can list more than one column: <code>meanBy("temp_f", "location", "decade")</code></li>
+      </ul>
+    </details>
+  </div>
+  <h3>My columns</h3>
+  <div id="clist" class="mute">None yet.</div>
+  <h3>Preview</h3>
+  <div class="scroll" id="cprev"></div>
+</section>
+<section id="other" hidden>
+  <h2>2. The other side</h2>
+  <div id="otherbrief"></div>
+  <h3>My case so far</h3>
+  <p class="small mute">Work on the Plot tab. Whenever a fit is on screen, a <b>Record this result</b> button appears under the slope table. Every result you record lands here, with the filters that produced it.</p>
+  <div id="reclist" class="mute">Nothing recorded yet.</div>
+  <h3>The case in my own words</h3>
+  <div class="panel" style="max-width:860px">
+    <label for="ocase">Write the argument you would actually make, using the results above. Every number real, every plot reproducible.</label>
+    <textarea id="ocase" placeholder="Someone who held this position could point to..."></textarea>
+    <label for="oleft" style="margin-top:12px">What did you have to leave out to make this case work?</label>
+    <textarea id="oleft" placeholder="Which years, which places, which columns did you not mention?"></textarea>
+  </div>
+</section>
+
+<section id="stress" hidden>
+  <h2>3. Stress test</h2>
+  <p>Each result you recorded is re-run here under two changes you did not choose: the full 1895&ndash;2025 record, and every location in the file. Nothing else about the fit changes.</p>
+  <p class="small mute">A result that holds up under both is telling you something about the climate. A result that moves is telling you something about your filter.</p>
+  <div id="stresslist" class="mute">Record a result in stage 2 first.</div>
+</section>
+
+<section id="stands" hidden>
+  <h2>4. What stands</h2>
+  <p>You have now argued a position you do not hold, and watched the results move when the window moved. The question left is the one worth answering.</p>
+  <div class="panel" style="max-width:860px">
+    <label for="wsurv"><b>What can this data support, no matter who is arguing?</b> Claims that held in every location and every window long enough to mean anything.</label>
+    <textarea id="wsurv" placeholder="Whatever your position, this data says..."></textarea>
+    <label for="wfail" style="margin-top:12px"><b>Which claims did not survive, on either side?</b> Include any of your own.</label>
+    <textarea id="wfail"></textarea>
+    <label for="woutside" style="margin-top:12px"><b>What evidence would settle what is left, and is it in this file?</b></label>
+    <textarea id="woutside" placeholder="To decide that, I would need..."></textarea>
+    <label for="wmind" style="margin-top:12px"><b>You wrote down what would change your mind. Did you see it?</b></label>
+    <div id="wchange" class="pred small" style="margin-bottom:10px"></div>
+    <textarea id="wmind"></textarea>
+    <div class="row" style="margin-top:16px"><button class="b pri" id="copyall">Copy my whole investigation</button><span id="copiedall" class="mute small"></span></div>
+    <textarea id="allbox" readonly style="margin-top:12px;display:none"></textarea>
+  </div>
+</section>
+</main>
+<footer>Prototype for instructor review. <button id="reset">Start over (clears this browser's saved hypothesis)</button>
+  <span class="dlg" id="resetdlg"> Clear everything? <button id="resetyes">Yes, clear</button> &middot; <button id="resetno">Cancel</button></span>
+</footer>
+
+<script>
+
+const LOCN=['Onslow County','North Carolina','California','Kansas','New Mexico','Contiguous U.S.','North America','South America','Europe','Africa','Asia','Oceania','Arctic','Antarctic'];
+const RAW=[[1895,0,60.1,-1.49],[1895,1,56.9,-1.63],[1895,2,56.5,-0.88],[1895,3,52.4,-1.74],[1895,4,51.2,-1.66],[1895,5,50.33,-1.68],[1896,0,62.1,0.51],[1896,1,59.2,0.67],[1896,2,57.5,0.12],[1896,3,54.7,0.56],[1896,4,53.8,0.94],[1896,5,51.98,-0.03],[1897,0,62.0,0.41],[1897,1,58.9,0.37],[1897,2,56.5,-0.88],[1897,3,54.0,-0.14],[1897,4,52.5,-0.36],[1897,5,51.54,-0.47],[1898,0,62.4,0.81],[1898,1,59.0,0.47],[1898,2,56.7,-0.68],[1898,3,52.6,-1.54],[1898,4,52.1,-0.76],[1898,5,51.42,-0.59],[1899,0,61.5,-0.09],[1899,1,58.4,-0.13],[1899,2,56.6,-0.78],[1899,3,52.8,-1.34],[1899,4,52.5,-0.36],[1899,5,50.99,-1.02],[1900,0,62.7,1.11],[1900,1,59.4,0.87],[1900,2,57.5,0.12],[1900,3,54.7,0.56],[1900,4,53.7,0.84],[1900,5,52.76,0.75],[1901,0,60.4,-1.19],[1901,1,56.9,-1.63],[1901,2,57.2,-0.18],[1901,3,54.2,0.06],[1901,4,53.4,0.54],[1901,5,51.86,-0.15],[1902,0,61.6,0.01],[1902,1,58.2,-0.33],[1902,2,56.2,-1.18],[1902,3,53.0,-1.14],[1902,4,53.1,0.24],[1902,5,51.57,-0.44],[1903,0,60.6,-0.99],[1903,1,57.9,-0.63],[1903,2,56.2,-1.18],[1903,3,52.1,-2.04],[1903,4,51.8,-1.06],[1903,5,50.61,-1.4],[1904,0,59.3,-2.29],[1904,1,56.5,-2.03],[1904,2,57.4,0.02],[1904,3,53.0,-1.14],[1904,4,53.0,0.14],[1904,5,51.15,-0.86],[1905,0,60.4,-1.19],[1905,1,57.7,-0.83],[1905,2,57.1,-0.28],[1905,3,52.3,-1.84],[1905,4,51.7,-1.16],[1905,5,50.99,-1.02],[1906,0,61.6,0.01],[1906,1,58.7,0.17],[1906,2,57.2,-0.18],[1906,3,53.0,-1.14],[1906,4,52.2,-0.66],[1906,5,51.72,-0.29],[1907,0,60.4,-1.19],[1907,1,57.8,-0.73],[1907,2,56.5,-0.88],[1907,3,53.6,-0.54],[1907,4,53.2,0.34],[1907,5,51.47,-0.54],[1908,0,61.8,0.21],[1908,1,58.6,0.07],[1908,2,56.2,-1.18],[1908,3,54.5,0.36],[1908,4,52.1,-0.76],[1908,5,52.07,0.06],[1909,0,61.0,-0.59],[1909,1,58.2,-0.33],[1909,2,56.2,-1.18],[1909,3,53.2,-0.94],[1909,4,52.4,-0.46],[1909,5,51.42,-0.59],[1910,0,61.0,-0.59],[1910,1,57.7,-0.83],[1910,2,57.7,0.32],[1910,3,54.7,0.56],[1910,4,54.7,1.84],[1910,5,52.41,0.4],[1911,0,63.1,1.51],[1911,1,59.8,1.27],[1911,2,55.4,-1.98],[1911,3,54.8,0.66],[1911,4,53.0,0.14],[1911,5,52.02,0.01],[1912,0,61.0,-0.59],[1912,1,57.8,-0.73],[1912,2,55.5,-1.88],[1912,3,51.6,-2.54],[1912,4,50.8,-2.06],[1912,5,50.22,-1.79],[1913,0,62.3,0.71],[1913,1,59.4,0.87],[1913,2,56.5,-0.88],[1913,3,54.2,0.06],[1913,4,51.0,-1.86],[1913,5,51.53,-0.48],[1914,0,60.9,-0.69],[1914,1,57.8,-0.73],[1914,2,57.4,0.02],[1914,3,54.7,0.56],[1914,4,52.9,0.04],[1914,5,51.83,-0.18],[1915,0,61.3,-0.29],[1915,1,58.2,-0.33],[1915,2,56.7,-0.68],[1915,3,52.3,-1.84],[1915,4,51.4,-1.46],[1915,5,51.43,-0.58],[1916,0,61.8,0.21],[1916,1,58.5,-0.03],[1916,2,55.6,-1.78],[1916,3,52.9,-1.24],[1916,4,53.2,0.34],[1916,5,50.84,-1.17],[1917,0,59.7,-1.89],[1917,1,56.4,-2.13],[1917,2,56.6,-0.78],[1917,3,52.0,-2.14],[1917,4,52.5,-0.36],[1917,5,50.05,-1.96],[1918,0,61.5,-0.09],[1918,1,58.4,-0.13],[1918,2,56.8,-0.58],[1918,3,54.0,-0.14],[1918,4,52.3,-0.56],[1918,5,51.85,-0.16],[1919,0,62.3,0.71],[1919,1,59.3,0.77],[1919,2,56.3,-1.08],[1919,3,52.7,-1.44],[1919,4,51.6,-1.26],[1919,5,51.54,-0.47],[1920,0,60.7,-0.89],[1920,1,57.5,-1.03],[1920,2,56.1,-1.28],[1920,3,53.2,-0.94],[1920,4,52.0,-0.86],[1920,5,51.07,-0.94],[1921,0,64.0,2.41],[1921,1,60.7,2.17],[1921,2,57.3,-0.08],[1921,3,56.5,2.36],[1921,4,53.9,1.04],[1921,5,53.79,1.78],[1922,0,62.7,1.11],[1922,1,59.6,1.07],[1922,2,56.1,-1.28],[1922,3,54.6,0.46],[1922,4,53.2,0.34],[1922,5,52.02,0.01],[1923,0,62.5,0.91],[1923,1,58.9,0.37],[1923,2,56.4,-0.98],[1923,3,53.8,-0.34],[1923,4,52.1,-0.76],[1923,5,51.63,-0.38],[1924,0,60.7,-0.89],[1924,1,57.3,-1.23],[1924,2,57.2,-0.18],[1924,3,51.9,-2.24],[1924,4,52.3,-0.56],[1924,5,50.57,-1.44],[1925,0,62.4,0.81],[1925,1,59.6,1.07],[1925,2,57.1,-0.28],[1925,3,54.6,0.46],[1925,4,53.2,0.34],[1925,5,52.51,0.5],[1926,0,61.6,0.01],[1926,1,58.4,-0.13],[1926,2,58.8,1.42],[1926,3,54.1,-0.04],[1926,4,52.5,-0.36],[1926,5,51.94,-0.07],[1927,0,62.5,0.91],[1927,1,59.4,0.87],[1927,2,56.9,-0.48],[1927,3,53.8,-0.34],[1927,4,53.9,1.04],[1927,5,52.14,0.13],[1928,0,61.4,-0.19],[1928,1,58.1,-0.43],[1928,2,57.7,0.32],[1928,3,54.0,-0.14],[1928,4,52.7,-0.16],[1928,5,51.91,-0.1],[1929,0,61.8,0.21],[1929,1,58.6,0.07],[1929,2,57.2,-0.18],[1929,3,52.2,-1.94],[1929,4,51.7,-1.16],[1929,5,50.85,-1.16],[1930,0,61.5,-0.09],[1930,1,58.6,0.07],[1930,2,56.9,-0.48],[1930,3,54.4,0.26],[1930,4,52.2,-0.66],[1930,5,51.97,-0.04],[1931,0,62.3,0.71],[1931,1,59.6,1.07],[1931,2,58.3,0.92],[1931,3,56.3,2.16],[1931,4,52.5,-0.36],[1931,5,53.52,1.51],[1932,0,63.4,1.81],[1932,1,60.0,1.47],[1932,2,56.9,-0.48],[1932,3,53.6,-0.54],[1932,4,51.6,-1.26],[1932,5,51.72,-0.29],[1933,0,63.5,1.91],[1933,1,60.5,1.97],[1933,2,56.7,-0.68],[1933,3,56.7,2.56],[1933,4,52.9,0.04],[1933,5,52.98,0.97],[1934,0,61.7,0.11],[1934,1,58.8,0.27],[1934,2,59.7,2.32],[1934,3,57.5,3.36],[1934,4,55.3,2.44],[1934,5,54.09,2.08],[1935,0,61.5,-0.09],[1935,1,58.6,0.07],[1935,2,56.8,-0.58],[1935,3,54.8,0.66],[1935,4,53.0,0.14],[1935,5,51.88,-0.13],[1936,0,61.6,0.01],[1936,1,58.6,0.07],[1936,2,58.6,1.22],[1936,3,55.2,1.06],[1936,4,53.3,0.44],[1936,5,52.14,0.13],[1937,0,61.6,0.01],[1937,1,58.5,-0.03],[1937,2,57.2,-0.18],[1937,3,53.5,-0.64],[1937,4,52.8,-0.06],[1937,5,51.54,-0.47],[1938,0,62.6,1.01],[1938,1,59.8,1.27],[1938,2,57.3,-0.08],[1938,3,56.8,2.66],[1938,4,53.0,0.14],[1938,5,53.17,1.16],[1939,0,63.0,1.41],[1939,1,59.9,1.37],[1939,2,58.3,0.92],[1939,3,56.7,2.56],[1939,4,52.8,-0.06],[1939,5,53.25,1.24],[1940,0,60.5,-1.09],[1940,1,57.1,-1.43],[1940,2,58.8,1.42],[1940,3,53.5,-0.64],[1940,4,53.1,0.24],[1940,5,51.88,-0.13],[1941,0,62.0,0.41],[1941,1,59.1,0.57],[1941,2,57.1,-0.28],[1941,3,55.0,0.86],[1941,4,52.1,-0.76],[1941,5,52.64,0.63],[1942,0,62.3,0.71],[1942,1,59.0,0.47],[1942,2,57.1,-0.28],[1942,3,53.9,-0.24],[1942,4,52.6,-0.26],[1942,5,51.83,-0.18],[1943,0,61.4,-0.19],[1943,1,58.7,0.17],[1943,2,57.8,0.42],[1943,3,54.4,0.26],[1943,4,53.6,0.74],[1943,5,52.06,0.05],[1944,0,61.6,0.01],[1944,1,58.5,-0.03],[1944,2,56.2,-1.18],[1944,3,54.0,-0.14],[1944,4,51.8,-1.06],[1944,5,51.82,-0.19],[1945,0,62.4,0.81],[1945,1,59.3,0.77],[1945,2,57.1,-0.28],[1945,3,53.6,-0.54],[1945,4,52.9,0.04],[1945,5,51.74,-0.27],[1946,0,62.3,0.71],[1946,1,59.7,1.17],[1946,2,56.7,-0.68],[1946,3,56.7,2.56],[1946,4,53.6,0.74],[1946,5,52.94,0.93],[1947,0,60.5,-1.09],[1947,1,57.9,-0.63],[1947,2,57.6,0.22],[1947,3,54.1,-0.04],[1947,4,52.7,-0.16],[1947,5,51.91,-0.1],[1948,0,61.5,-0.09],[1948,1,59.0,0.47],[1948,2,55.7,-1.68],[1948,3,53.6,-0.54],[1948,4,52.5,-0.36],[1948,5,51.6,-0.41],[1949,0,63.2,1.61],[1949,1,60.2,1.67],[1949,2,56.2,-1.18],[1949,3,53.6,-0.54],[1949,4,52.1,-0.76],[1949,5,52.01,0.0],[1950,0,61.6,0.01],[1950,1,58.8,0.27],[1950,2,58.1,0.72],[1950,3,53.2,-0.94],[1950,4,54.2,1.34],[1950,5,51.38,-0.63],[1951,0,61.7,0.11],[1951,1,58.8,0.27],[1951,2,57.2,-0.18],[1951,3,52.0,-2.14],[1951,4,53.0,0.14],[1951,5,51.11,-0.9],[1952,0,62.2,0.61],[1952,1,59.3,0.77],[1952,2,56.8,-0.58],[1952,3,54.8,0.66],[1952,4,52.7,-0.16],[1952,5,52.27,0.26],[1953,0,62.7,1.11],[1953,1,60.0,1.47],[1953,2,57.2,-0.18],[1953,3,56.3,2.16],[1953,4,53.3,0.44],[1953,5,53.35,1.34],[1954,0,61.8,0.21],[1954,1,59.1,0.57],[1954,2,57.6,0.22],[1954,3,57.2,3.06],[1954,4,54.9,2.04],[1954,5,53.32,1.31],[1955,0,61.5,-0.09],[1955,1,58.6,0.07],[1955,2,56.2,-1.18],[1955,3,54.6,0.46],[1955,4,52.5,-0.36],[1955,5,51.68,-0.33],[1956,0,62.2,0.61],[1956,1,59.1,0.57],[1956,2,57.0,-0.38],[1956,3,55.9,1.76],[1956,4,53.4,0.54],[1956,5,52.33,0.32],[1957,0,62.0,0.41],[1957,1,59.3,0.77],[1957,2,57.1,-0.28],[1957,3,53.6,-0.54],[1957,4,53.1,0.24],[1957,5,52.03,0.02],[1958,0,59.6,-1.99],[1958,1,56.8,-1.73],[1958,2,58.9,1.52],[1958,3,53.1,-1.04],[1958,4,53.2,0.34],[1958,5,51.92,-0.09],[1959,0,62.1,0.51],[1959,1,59.1,0.57],[1959,2,59.0,1.62],[1959,3,53.6,-0.54],[1959,4,53.0,0.14],[1959,5,52.1,0.09],[1960,0,60.4,-1.19],[1960,1,57.2,-1.33],[1960,2,58.1,0.72],[1960,3,52.7,-1.44],[1960,4,52.3,-0.56],[1960,5,51.43,-0.58],[1961,0,61.3,-0.29],[1961,1,58.0,-0.53],[1961,2,57.8,0.42],[1961,3,52.7,-1.44],[1961,4,52.2,-0.66],[1961,5,51.86,-0.15],[1962,0,60.5,-1.09],[1962,1,57.6,-0.93],[1962,2,57.4,0.02],[1962,3,54.3,0.16],[1962,4,53.3,0.44],[1962,5,51.89,-0.12],[1963,0,59.5,-2.09],[1963,1,56.7,-1.83],[1963,2,57.1,-0.28],[1963,3,55.8,1.66],[1963,4,53.6,0.74],[1963,5,52.25,0.24],[1964,0,61.3,-0.29],[1964,1,58.1,-0.43],[1964,2,56.6,-0.78],[1964,3,54.9,0.76],[1964,4,51.7,-1.16],[1964,5,51.67,-0.34],[1965,0,60.9,-0.69],[1965,1,58.2,-0.33],[1965,2,56.7,-0.68],[1965,3,54.5,0.36],[1965,4,52.6,-0.26],[1965,5,51.67,-0.34],[1966,0,59.7,-1.89],[1966,1,56.9,-1.63],[1966,2,58.0,0.62],[1966,3,53.5,-0.64],[1966,4,52.6,-0.26],[1966,5,51.48,-0.53],[1967,0,60.1,-1.49],[1967,1,57.2,-1.33],[1967,2,57.5,0.12],[1967,3,53.9,-0.24],[1967,4,53.0,0.14],[1967,5,51.75,-0.26],[1968,0,60.3,-1.29],[1968,1,57.2,-1.33],[1968,2,57.6,0.22],[1968,3,53.5,-0.64],[1968,4,52.0,-0.86],[1968,5,51.31,-0.7],[1969,0,60.1,-1.49],[1969,1,57.0,-1.53],[1969,2,57.5,0.12],[1969,3,53.1,-1.04],[1969,4,53.2,0.34],[1969,5,51.49,-0.52],[1970,0,61.4,-0.19],[1970,1,58.4,-0.13],[1970,2,57.8,0.42],[1970,3,54.0,-0.14],[1970,4,52.3,-0.56],[1970,5,51.6,-0.41],[1971,0,61.9,0.31],[1971,1,58.7,0.17],[1971,2,56.2,-1.18],[1971,3,53.8,-0.34],[1971,4,52.2,-0.66],[1971,5,51.65,-0.36],[1972,0,61.4,-0.19],[1972,1,58.0,-0.53],[1972,2,57.3,-0.08],[1972,3,53.2,-0.94],[1972,4,53.0,0.14],[1972,5,51.36,-0.65],[1973,0,62.2,0.61],[1973,1,59.0,0.47],[1973,2,57.3,-0.08],[1973,3,54.0,-0.14],[1973,4,51.5,-1.36],[1973,5,52.28,0.27],[1974,0,62.3,0.71],[1974,1,59.0,0.47],[1974,2,57.6,0.22],[1974,3,54.4,0.26],[1974,4,52.8,-0.06],[1974,5,52.26,0.25],[1975,0,63.1,1.51],[1975,1,59.3,0.77],[1975,2,56.3,-1.08],[1975,3,53.7,-0.44],[1975,4,51.4,-1.46],[1975,5,51.49,-0.52],[1976,0,60.7,-0.89],[1976,1,57.3,-1.23],[1976,2,57.5,0.12],[1976,3,54.2,0.06],[1976,4,51.9,-0.96],[1976,5,51.46,-0.55],[1977,0,61.5,-0.09],[1977,1,58.3,-0.23],[1977,2,58.0,0.62],[1977,3,55.5,1.36],[1977,4,53.7,0.84],[1977,5,52.54,0.53],[1978,0,60.7,-0.89],[1978,1,57.4,-1.13],[1978,2,57.6,0.22],[1978,3,52.7,-1.44],[1978,4,53.2,0.34],[1978,5,51.04,-0.97],[1979,0,60.9,-0.69],[1979,1,57.6,-0.93],[1979,2,57.7,0.32],[1979,3,52.3,-1.84],[1979,4,51.8,-1.06],[1979,5,50.88,-1.13],[1980,0,60.8,-0.79],[1980,1,57.9,-0.63],[1980,2,58.1,0.72],[1980,3,55.1,0.96],[1980,4,53.6,0.74],[1980,5,52.38,0.37],[1981,0,60.3,-1.29],[1981,1,57.2,-1.33],[1981,2,59.3,1.92],[1981,3,55.7,1.56],[1981,4,54.4,1.54],[1981,5,53.11,1.1],[1982,0,62.1,0.51],[1982,1,58.6,0.07],[1982,2,56.3,-1.08],[1982,3,53.0,-1.14],[1982,4,52.6,-0.26],[1982,5,51.33,-0.68],[1983,0,61.4,-0.19],[1983,1,57.9,-0.63],[1983,2,57.6,0.22],[1983,3,53.2,-0.94],[1983,4,52.5,-0.36],[1983,5,51.87,-0.14],[1984,0,61.8,0.21],[1984,1,58.6,0.07],[1984,2,58.2,0.82],[1984,3,54.0,-0.14],[1984,4,52.4,-0.46],[1984,5,51.97,-0.04],[1985,0,63.1,1.51],[1985,1,59.2,0.67],[1985,2,57.3,-0.08],[1985,3,52.5,-1.64],[1985,4,52.8,-0.06],[1985,5,51.29,-0.72],[1986,0,63.0,1.41],[1986,1,59.8,1.27],[1986,2,58.9,1.52],[1986,3,56.2,2.06],[1986,4,53.6,0.74],[1986,5,53.31,1.3],[1987,0,61.4,-0.19],[1987,1,58.5,-0.03],[1987,2,58.3,0.92],[1987,3,55.5,1.36],[1987,4,51.9,-0.96],[1987,5,53.32,1.31],[1988,0,60.2,-1.39],[1988,1,57.3,-1.23],[1988,2,58.8,1.42],[1988,3,54.7,0.56],[1988,4,52.6,-0.26],[1988,5,52.62,0.61],[1989,0,61.5,-0.09],[1989,1,58.2,-0.33],[1989,2,58.1,0.72],[1989,3,53.1,-1.04],[1989,4,54.0,1.14],[1989,5,51.82,-0.19],[1990,0,64.3,2.71],[1990,1,61.1,2.57],[1990,2,58.0,0.62],[1990,3,55.5,1.36],[1990,4,53.3,0.44],[1990,5,53.5,1.49],[1991,0,63.0,1.41],[1991,1,60.2,1.67],[1991,2,58.1,0.72],[1991,3,55.7,1.56],[1991,4,52.5,-0.36],[1991,5,53.15,1.14],[1992,0,61.3,-0.29],[1992,1,58.2,-0.33],[1992,2,59.3,1.92],[1992,3,54.2,0.06],[1992,4,52.6,-0.26],[1992,5,52.59,0.58],[1993,0,61.8,0.21],[1993,1,58.7,0.17],[1993,2,57.7,0.32],[1993,3,51.9,-2.24],[1993,4,53.1,0.24],[1993,5,51.25,-0.76],[1994,0,62.2,0.61],[1994,1,59.0,0.47],[1994,2,58.0,0.62],[1994,3,54.9,0.76],[1994,4,54.4,1.54],[1994,5,52.85,0.84],[1995,0,61.4,-0.19],[1995,1,58.4,-0.13],[1995,2,58.9,1.52],[1995,3,53.9,-0.24],[1995,4,54.3,1.44],[1995,5,52.65,0.64],[1996,0,60.9,-0.69],[1996,1,57.8,-0.73],[1996,2,59.6,2.22],[1996,3,53.1,-1.04],[1996,4,54.7,1.84],[1996,5,51.88,-0.13],[1997,0,61.1,-0.49],[1997,1,58.1,-0.43],[1997,2,59.1,1.72],[1997,3,53.7,-0.44],[1997,4,52.9,0.04],[1997,5,52.19,0.18],[1998,0,63.7,2.11],[1998,1,60.8,2.27],[1998,2,56.7,-0.68],[1998,3,56.3,2.16],[1998,4,54.2,1.34],[1998,5,54.22,2.21],[1999,0,62.4,0.81],[1999,1,59.7,1.17],[1999,2,58.0,0.62],[1999,3,56.0,1.86],[1999,4,54.3,1.44],[1999,5,53.87,1.86],[2000,0,61.1,-0.49],[2000,1,58.4,-0.13],[2000,2,58.8,1.42],[2000,3,55.5,1.36],[2000,4,55.2,2.34],[2000,5,53.25,1.24],[2001,0,62.3,0.71],[2001,1,59.4,0.87],[2001,2,59.1,1.72],[2001,3,55.9,1.76],[2001,4,54.6,1.74],[2001,5,53.68,1.67],[2002,0,63.1,1.51],[2002,1,60.0,1.47],[2002,2,58.9,1.52],[2002,3,55.2,1.06],[2002,4,54.4,1.54],[2002,5,53.2,1.19],[2003,0,61.7,0.11],[2003,1,58.7,0.17],[2003,2,59.4,2.02],[2003,3,55.0,0.86],[2003,4,55.5,2.64],[2003,5,53.24,1.23],[2004,0,62.0,0.41],[2004,1,59.3,0.77],[2004,2,58.9,1.52],[2004,3,55.1,0.96],[2004,4,53.5,0.64],[2004,5,53.08,1.07],[2005,0,62.3,0.71],[2005,1,59.4,0.87],[2005,2,58.6,1.22],[2005,3,55.9,1.76],[2005,4,54.7,1.84],[2005,5,53.63,1.62],[2006,0,62.6,1.01],[2006,1,59.8,1.27],[2006,2,58.6,1.22],[2006,3,56.9,2.76],[2006,4,54.7,1.84],[2006,5,54.24,2.23],[2007,0,62.9,1.31],[2007,1,60.5,1.97],[2007,2,58.9,1.52],[2007,3,55.1,0.96],[2007,4,54.2,1.34],[2007,5,53.64,1.63],[2008,0,62.6,1.01],[2008,1,59.3,0.77],[2008,2,58.9,1.52],[2008,3,53.6,-0.54],[2008,4,53.6,0.74],[2008,5,52.28,0.27],[2009,0,61.9,0.31],[2009,1,58.9,0.37],[2009,2,58.8,1.42],[2009,3,53.6,-0.54],[2009,4,54.3,1.44],[2009,5,52.38,0.37],[2010,0,61.5,-0.09],[2010,1,59.0,0.47],[2010,2,57.7,0.32],[2010,3,55.3,1.16],[2010,4,54.2,1.34],[2010,5,52.98,0.97],[2011,0,63.1,1.51],[2011,1,60.4,1.87],[2011,2,57.4,0.02],[2011,3,55.2,1.06],[2011,4,54.6,1.74],[2011,5,53.17,1.16],[2012,0,63.4,1.81],[2012,1,60.7,2.17],[2012,2,59.5,2.12],[2012,3,58.2,4.06],[2012,4,56.0,3.14],[2012,5,55.27,3.26],[2013,0,61.9,0.31],[2013,1,58.6,0.07],[2013,2,59.3,1.92],[2013,3,53.7,-0.44],[2013,4,53.7,0.84],[2013,5,52.42,0.41],[2014,0,61.6,0.01],[2014,1,58.4,-0.13],[2014,2,61.5,4.12],[2014,3,53.7,-0.44],[2014,4,54.8,1.94],[2014,5,52.53,0.52],[2015,0,63.7,2.11],[2015,1,60.5,1.97],[2015,2,60.8,3.42],[2015,3,56.3,2.16],[2015,4,54.9,2.04],[2015,5,54.38,2.37],[2016,0,63.7,2.11],[2016,1,60.8,2.27],[2016,2,60.1,2.72],[2016,3,57.2,3.06],[2016,4,55.5,2.64],[2016,5,54.9,2.89],[2017,0,64.2,2.61],[2017,1,61.0,2.47],[2017,2,60.3,2.92],[2017,3,56.5,2.36],[2017,4,56.4,3.54],[2017,5,54.54,2.53],[2018,0,63.9,2.31],[2018,1,60.4,1.87],[2018,2,60.1,2.72],[2018,3,54.6,0.46],[2018,4,55.5,2.64],[2018,5,53.51,1.5],[2019,0,64.8,3.21],[2019,1,61.3,2.77],[2019,2,58.4,1.02],[2019,3,53.8,-0.34],[2019,4,54.5,1.64],[2019,5,52.66,0.65],[2020,0,64.2,2.61],[2020,1,60.8,2.27],[2020,2,60.5,3.12],[2020,3,55.6,1.46],[2020,4,56.0,3.14],[2020,5,54.36,2.35],[2021,0,63.0,1.41],[2021,1,60.2,1.67],[2021,2,60.4,3.02],[2021,3,56.1,1.96],[2021,4,55.4,2.54],[2021,5,54.5,2.49],[2022,0,63.1,1.51],[2022,1,59.9,1.37],[2022,2,60.1,2.72],[2022,3,55.2,1.06],[2022,4,54.6,1.74],[2022,5,53.38,1.37],[2023,0,63.3,1.71],[2023,1,60.8,2.27],[2023,2,58.3,0.92],[2023,3,56.3,2.16],[2023,4,55.3,2.44],[2023,5,54.36,2.35],[2024,0,63.5,1.91],[2024,1,61.1,2.57],[2024,2,60.5,3.12],[2024,3,57.6,3.46],[2024,4,56.2,3.34],[2024,5,55.48,3.47],[2025,0,62.8,1.21],[2025,1,60.0,1.47],[2025,2,60.4,3.02],[2025,3,56.0,1.86],[2025,4,56.2,3.34],[2025,5,54.62,2.61],[1895,6,null,-1.22],[1896,6,null,-1.82],[1897,6,null,-1.39],[1898,6,null,-1.3],[1899,6,null,-1.85],[1900,6,null,0.04],[1901,6,null,-0.52],[1902,6,null,-0.58],[1903,6,null,-1.03],[1904,6,null,-1.31],[1905,6,null,-0.61],[1906,6,null,-0.74],[1907,6,null,-1.94],[1908,6,null,-0.67],[1909,6,null,-1.44],[1910,6,null,-0.52],[1911,6,null,-0.86],[1912,6,null,-1.08],[1913,6,null,-1.44],[1914,6,null,-0.9],[1915,6,null,0.43],[1916,6,null,-0.86],[1917,6,null,-2.02],[1918,6,null,-1.58],[1919,6,null,-0.5],[1920,6,null,-0.86],[1921,6,null,-0.02],[1922,6,null,-0.86],[1923,6,null,-0.49],[1924,6,null,-0.59],[1925,6,null,-0.38],[1926,6,null,0.11],[1927,6,null,-0.41],[1928,6,null,0.65],[1929,6,null,-0.59],[1930,6,null,0.34],[1931,6,null,1.39],[1932,6,null,-0.34],[1933,6,null,-0.5],[1934,6,null,0.45],[1935,6,null,-0.49],[1936,6,null,-0.7],[1937,6,null,0.18],[1938,6,null,0.9],[1939,6,null,0.54],[1940,6,null,1.01],[1941,6,null,1.08],[1942,6,null,0.68],[1943,6,null,0.32],[1944,6,null,0.74],[1945,6,null,0.04],[1946,6,null,0.36],[1947,6,null,0.49],[1948,6,null,-0.14],[1949,6,null,-0.18],[1950,6,null,-0.74],[1951,6,null,-0.63],[1952,6,null,0.85],[1953,6,null,1.19],[1954,6,null,0.76],[1955,6,null,-0.29],[1956,6,null,-0.58],[1957,6,null,0.18],[1958,6,null,0.61],[1959,6,null,-0.25],[1960,6,null,0.34],[1961,6,null,-0.36],[1962,6,null,0.22],[1963,6,null,0.41],[1964,6,null,-0.7],[1965,6,null,-0.49],[1966,6,null,-0.59],[1967,6,null,-0.34],[1968,6,null,-0.22],[1969,6,null,0.09],[1970,6,null,-0.36],[1971,6,null,-0.49],[1972,6,null,-1.51],[1973,6,null,0.41],[1974,6,null,-0.56],[1975,6,null,-0.5],[1976,6,null,0.09],[1977,6,null,1.15],[1978,6,null,-0.23],[1979,6,null,-0.2],[1980,6,null,0.88],[1981,6,null,2.12],[1982,6,null,-0.81],[1983,6,null,0.13],[1984,6,null,0.25],[1985,6,null,0.05],[1986,6,null,0.81],[1987,6,null,1.8],[1988,6,null,1.21],[1989,6,null,0.04],[1990,6,null,0.56],[1991,6,null,1.12],[1992,6,null,0.36],[1993,6,null,0.43],[1994,6,null,0.92],[1995,6,null,0.97],[1996,6,null,0.25],[1997,6,null,1.01],[1998,6,null,2.92],[1999,6,null,1.85],[2000,6,null,1.39],[2001,6,null,2.03],[2002,6,null,1.33],[2003,6,null,1.78],[2004,6,null,0.88],[2005,6,null,2.21],[2006,6,null,2.65],[2007,6,null,1.55],[2008,6,null,0.67],[2009,6,null,0.9],[2010,6,null,2.95],[2011,6,null,1.69],[2012,6,null,2.68],[2013,6,null,1.04],[2014,6,null,1.42],[2015,6,null,2.27],[2016,6,null,3.46],[2017,6,null,2.63],[2018,6,null,1.64],[2019,6,null,2.02],[2020,6,null,2.14],[2021,6,null,2.81],[2022,6,null,1.85],[2023,6,null,3.58],[2024,6,null,3.91],[2025,6,null,3.31],[1895,7,null,-0.45],[1896,7,null,-0.02],[1897,7,null,-0.32],[1898,7,null,-0.52],[1899,7,null,-0.13],[1900,7,null,0.31],[1901,7,null,0.58],[1902,7,null,0.49],[1903,7,null,-0.13],[1904,7,null,-0.59],[1905,7,null,0.16],[1906,7,null,0.14],[1907,7,null,-0.25],[1908,7,null,-0.38],[1909,7,null,-0.61],[1910,7,null,-0.65],[1911,7,null,-0.72],[1912,7,null,-0.25],[1913,7,null,-0.18],[1914,7,null,-0.05],[1915,7,null,0.04],[1916,7,null,-0.83],[1917,7,null,-1.64],[1918,7,null,-1.28],[1919,7,null,-0.47],[1920,7,null,-0.86],[1921,7,null,-1.04],[1922,7,null,-0.97],[1923,7,null,-1.1],[1924,7,null,-1.15],[1925,7,null,-0.81],[1926,7,null,-0.25],[1927,7,null,-0.61],[1928,7,null,-0.77],[1929,7,null,-0.68],[1930,7,null,-0.32],[1931,7,null,-0.43],[1932,7,null,-0.18],[1933,7,null,-0.65],[1934,7,null,-0.7],[1935,7,null,-0.36],[1936,7,null,-0.09],[1937,7,null,-0.14],[1938,7,null,-0.32],[1939,7,null,-0.14],[1940,7,null,0.22],[1941,7,null,0.4],[1942,7,null,-0.16],[1943,7,null,-0.38],[1944,7,null,0.25],[1945,7,null,0.07],[1946,7,null,-0.04],[1947,7,null,-0.18],[1948,7,null,-0.02],[1949,7,null,-0.36],[1950,7,null,-0.38],[1951,7,null,-0.13],[1952,7,null,0.04],[1953,7,null,0.34],[1954,7,null,-0.18],[1955,7,null,-0.49],[1956,7,null,-0.9],[1957,7,null,-0.05],[1958,7,null,0.61],[1959,7,null,0.25],[1960,7,null,-0.02],[1961,7,null,0.41],[1962,7,null,-0.07],[1963,7,null,0.4],[1964,7,null,-0.29],[1965,7,null,0.22],[1966,7,null,0.14],[1967,7,null,0.11],[1968,7,null,-0.2],[1969,7,null,0.81],[1970,7,null,0.41],[1971,7,null,-0.4],[1972,7,null,0.34],[1973,7,null,0.41],[1974,7,null,-0.34],[1975,7,null,-0.13],[1976,7,null,-0.2],[1977,7,null,0.61],[1978,7,null,0.41],[1979,7,null,0.4],[1980,7,null,0.68],[1981,7,null,0.45],[1982,7,null,0.63],[1983,7,null,0.99],[1984,7,null,0.23],[1985,7,null,0.38],[1986,7,null,0.61],[1987,7,null,1.21],[1988,7,null,0.61],[1989,7,null,0.43],[1990,7,null,0.74],[1991,7,null,0.74],[1992,7,null,0.54],[1993,7,null,0.72],[1994,7,null,1.04],[1995,7,null,1.1],[1996,7,null,0.76],[1997,7,null,1.39],[1998,7,null,1.75],[1999,7,null,0.68],[2000,7,null,0.59],[2001,7,null,1.13],[2002,7,null,1.49],[2003,7,null,1.4],[2004,7,null,1.28],[2005,7,null,1.49],[2006,7,null,1.44],[2007,7,null,1.04],[2008,7,null,1.15],[2009,7,null,1.55],[2010,7,null,1.55],[2011,7,null,1.17],[2012,7,null,1.6],[2013,7,null,1.4],[2014,7,null,1.82],[2015,7,null,2.48],[2016,7,null,2.12],[2017,7,null,2.11],[2018,7,null,1.66],[2019,7,null,2.2],[2020,7,null,2.39],[2021,7,null,1.82],[2022,7,null,1.51],[2023,7,null,3.06],[2024,7,null,3.04],[2025,7,null,2.12],[1895,8,null,-0.61],[1896,8,null,-0.61],[1897,8,null,-0.2],[1898,8,null,-0.05],[1899,8,null,-0.25],[1900,8,null,-0.25],[1901,8,null,-0.27],[1902,8,null,-1.51],[1903,8,null,-0.16],[1904,8,null,-0.65],[1905,8,null,-0.5],[1906,8,null,-0.13],[1907,8,null,-1.08],[1908,8,null,-0.94],[1909,8,null,-0.88],[1910,8,null,0.07],[1911,8,null,-0.32],[1912,8,null,-1.08],[1913,8,null,-0.23],[1914,8,null,-0.27],[1915,8,null,-0.88],[1916,8,null,0.05],[1917,8,null,-0.95],[1918,8,null,-0.14],[1919,8,null,-0.95],[1920,8,null,0.07],[1921,8,null,0.07],[1922,8,null,-0.81],[1923,8,null,-0.18],[1924,8,null,-0.54],[1925,8,null,-0.05],[1926,8,null,0.04],[1927,8,null,-0.2],[1928,8,null,-0.36],[1929,8,null,-1.01],[1930,8,null,0.68],[1931,8,null,-0.83],[1932,8,null,-0.09],[1933,8,null,-0.97],[1934,8,null,1.08],[1935,8,null,0.05],[1936,8,null,0.54],[1937,8,null,0.94],[1938,8,null,0.86],[1939,8,null,0.31],[1940,8,null,-1.53],[1941,8,null,-1.58],[1942,8,null,-1.37],[1943,8,null,0.58],[1944,8,null,0.11],[1945,8,null,0.02],[1946,8,null,0.31],[1947,8,null,0.18],[1948,8,null,0.45],[1949,8,null,0.74],[1950,8,null,0.49],[1951,8,null,0.41],[1952,8,null,-0.02],[1953,8,null,0.36],[1954,8,null,-0.36],[1955,8,null,-0.09],[1956,8,null,-1.62],[1957,8,null,0.45],[1958,8,null,0.07],[1959,8,null,0.5],[1960,8,null,0.5],[1961,8,null,1.12],[1962,8,null,-0.2],[1963,8,null,-0.56],[1964,8,null,-0.16],[1965,8,null,-0.81],[1966,8,null,0.54],[1967,8,null,0.4],[1968,8,null,-0.04],[1969,8,null,-0.68],[1970,8,null,-0.09],[1971,8,null,0.09],[1972,8,null,0.13],[1973,8,null,-0.02],[1974,8,null,0.58],[1975,8,null,0.99],[1976,8,null,-0.67],[1977,8,null,0.11],[1978,8,null,-0.68],[1979,8,null,0.05],[1980,8,null,-0.76],[1981,8,null,0.18],[1982,8,null,0.49],[1983,8,null,0.79],[1984,8,null,0.14],[1985,8,null,-0.92],[1986,8,null,-0.05],[1987,8,null,-0.85],[1988,8,null,0.56],[1989,8,null,1.73],[1990,8,null,1.67],[1991,8,null,0.45],[1992,8,null,0.79],[1993,8,null,0.09],[1994,8,null,1.44],[1995,8,null,1.06],[1996,8,null,-0.07],[1997,8,null,0.79],[1998,8,null,1.06],[1999,8,null,1.8],[2000,8,null,2.11],[2001,8,null,1.49],[2002,8,null,1.85],[2003,8,null,1.51],[2004,8,null,1.31],[2005,8,null,1.35],[2006,8,null,1.73],[2007,8,null,2.29],[2008,8,null,2.09],[2009,8,null,1.78],[2010,8,null,1.13],[2011,8,null,2],[2012,8,null,1.66],[2013,8,null,1.8],[2014,8,null,2.86],[2015,8,null,2.79],[2016,8,null,2.41],[2017,8,null,2.29],[2018,8,null,2.99],[2019,8,null,3.04],[2020,8,null,3.49],[2021,8,null,2.11],[2022,8,null,3.13],[2023,8,null,3.47],[2024,8,null,4.09],[2025,8,null,3.46],[1895,9,null,-0.05],[1896,9,null,0.11],[1897,9,null,0.22],[1898,9,null,-0.2],[1899,9,null,0.25],[1900,9,null,0.11],[1901,9,null,0.31],[1902,9,null,0.32],[1903,9,null,-0.68],[1904,9,null,-0.76],[1905,9,null,-0.22],[1906,9,null,-0.22],[1907,9,null,-0.81],[1908,9,null,-0.41],[1909,9,null,-0.25],[1910,9,null,-0.56],[1911,9,null,-0.68],[1912,9,null,-0.41],[1913,9,null,-0.34],[1914,9,null,-0.04],[1915,9,null,-0.02],[1916,9,null,-0.59],[1917,9,null,-1.04],[1918,9,null,-0.92],[1919,9,null,-0.22],[1920,9,null,-0.58],[1921,9,null,-0.59],[1922,9,null,-0.25],[1923,9,null,-0.67],[1924,9,null,-0.13],[1925,9,null,-0.36],[1926,9,null,-0.04],[1927,9,null,0.04],[1928,9,null,-0.02],[1929,9,null,-0.43],[1930,9,null,-0.38],[1931,9,null,0.52],[1932,9,null,-0.04],[1933,9,null,0.04],[1934,9,null,-0.09],[1935,9,null,-0.31],[1936,9,null,-0.07],[1937,9,null,0.05],[1938,9,null,-0.31],[1939,9,null,-0.14],[1940,9,null,0.14],[1941,9,null,0.67],[1942,9,null,0.32],[1943,9,null,-0.41],[1944,9,null,-0.07],[1945,9,null,-0.14],[1946,9,null,-0.04],[1947,9,null,0.2],[1948,9,null,-0.36],[1949,9,null,0],[1950,9,null,-0.41],[1951,9,null,-0.18],[1952,9,null,0.05],[1953,9,null,-0.25],[1954,9,null,-0.47],[1955,9,null,-0.11],[1956,9,null,-0.58],[1957,9,null,-0.22],[1958,9,null,0.38],[1959,9,null,-0.02],[1960,9,null,0.2],[1961,9,null,-0.27],[1962,9,null,0.02],[1963,9,null,0.11],[1964,9,null,-0.41],[1965,9,null,-0.4],[1966,9,null,0.18],[1967,9,null,-0.5],[1968,9,null,-0.32],[1969,9,null,0.65],[1970,9,null,0.22],[1971,9,null,-0.41],[1972,9,null,0.05],[1973,9,null,0.45],[1974,9,null,-0.54],[1975,9,null,-0.4],[1976,9,null,-0.38],[1977,9,null,0.16],[1978,9,null,0.14],[1979,9,null,0.58],[1980,9,null,0.54],[1981,9,null,0.2],[1982,9,null,0.11],[1983,9,null,0.68],[1984,9,null,0.36],[1985,9,null,0.36],[1986,9,null,0.29],[1987,9,null,1.26],[1988,9,null,0.76],[1989,9,null,0.13],[1990,9,null,0.95],[1991,9,null,0.49],[1992,9,null,0.25],[1993,9,null,0.76],[1994,9,null,0.52],[1995,9,null,1.01],[1996,9,null,0.88],[1997,9,null,0.85],[1998,9,null,1.57],[1999,9,null,1.03],[2000,9,null,0.72],[2001,9,null,1.08],[2002,9,null,1.39],[2003,9,null,1.55],[2004,9,null,1.28],[2005,9,null,1.84],[2006,9,null,1.3],[2007,9,null,1.28],[2008,9,null,1.13],[2009,9,null,1.64],[2010,9,null,2.45],[2011,9,null,1.33],[2012,9,null,1.42],[2013,9,null,1.6],[2014,9,null,1.67],[2015,9,null,1.91],[2016,9,null,2.39],[2017,9,null,1.89],[2018,9,null,2.14],[2019,9,null,2.29],[2020,9,null,2.12],[2021,9,null,2.27],[2022,9,null,1.69],[2023,9,null,2.59],[2024,9,null,2.95],[2025,9,null,2.16],[1895,10,null,-1.24],[1896,10,null,-0.83],[1897,10,null,-0.76],[1898,10,null,-1.19],[1899,10,null,-0.22],[1900,10,null,-0.86],[1901,10,null,-0.25],[1902,10,null,-1.1],[1903,10,null,-0.85],[1904,10,null,-0.63],[1905,10,null,-0.99],[1906,10,null,-0.27],[1907,10,null,-1.15],[1908,10,null,-1.1],[1909,10,null,-0.68],[1910,10,null,-0.92],[1911,10,null,-0.94],[1912,10,null,-1.42],[1913,10,null,-0.72],[1914,10,null,0.16],[1915,10,null,-0.49],[1916,10,null,-1.03],[1917,10,null,-0.65],[1918,10,null,-0.9],[1919,10,null,-0.79],[1920,10,null,-0.32],[1921,10,null,0.04],[1922,10,null,-0.25],[1923,10,null,-0.32],[1924,10,null,0.02],[1925,10,null,0.04],[1926,10,null,0.05],[1927,10,null,-0.54],[1928,10,null,-0.45],[1929,10,null,-1.22],[1930,10,null,-0.4],[1931,10,null,-0.54],[1932,10,null,0.47],[1933,10,null,-1.04],[1934,10,null,-0.22],[1935,10,null,-0.22],[1936,10,null,-0.27],[1937,10,null,-0.25],[1938,10,null,0.47],[1939,10,null,0.49],[1940,10,null,0.05],[1941,10,null,-0.2],[1942,10,null,0],[1943,10,null,0.63],[1944,10,null,0.54],[1945,10,null,-0.29],[1946,10,null,-0.09],[1947,10,null,0.04],[1948,10,null,0.79],[1949,10,null,-0.02],[1950,10,null,-0.68],[1951,10,null,0.2],[1952,10,null,-0.61],[1953,10,null,0.59],[1954,10,null,-0.4],[1955,10,null,-0.11],[1956,10,null,-0.76],[1957,10,null,-0.49],[1958,10,null,-0.25],[1959,10,null,0.25],[1960,10,null,-0.36],[1961,10,null,0.41],[1962,10,null,0.68],[1963,10,null,0.59],[1964,10,null,-0.54],[1965,10,null,-0.23],[1966,10,null,-0.32],[1967,10,null,0.38],[1968,10,null,-0.32],[1969,10,null,-1.22],[1970,10,null,-0.09],[1971,10,null,0.34],[1972,10,null,-0.52],[1973,10,null,0.76],[1974,10,null,-0.41],[1975,10,null,1.03],[1976,10,null,-0.67],[1977,10,null,0.18],[1978,10,null,0.38],[1979,10,null,0.14],[1980,10,null,0.34],[1981,10,null,1.22],[1982,10,null,0.41],[1983,10,null,1.28],[1984,10,null,-0.2],[1985,10,null,0.05],[1986,10,null,0.49],[1987,10,null,-0.05],[1988,10,null,1.37],[1989,10,null,1.26],[1990,10,null,1.67],[1991,10,null,1.24],[1992,10,null,0.38],[1993,10,null,0.61],[1994,10,null,0.99],[1995,10,null,2.23],[1996,10,null,0.67],[1997,10,null,1.42],[1998,10,null,1.4],[1999,10,null,1.6],[2000,10,null,1.37],[2001,10,null,1.75],[2002,10,null,2.11],[2003,10,null,1.93],[2004,10,null,1.87],[2005,10,null,2.25],[2006,10,null,1.8],[2007,10,null,3.06],[2008,10,null,2.47],[2009,10,null,1.8],[2010,10,null,1.98],[2011,10,null,2.12],[2012,10,null,1.76],[2013,10,null,2.39],[2014,10,null,1.98],[2015,10,null,3.13],[2016,10,null,3.1],[2017,10,null,3.17],[2018,10,null,2.59],[2019,10,null,3.2],[2020,10,null,3.98],[2021,10,null,2.92],[2022,10,null,3.37],[2023,10,null,3.69],[2024,10,null,3.91],[2025,10,null,3.89],[1895,11,null,-0.79],[1896,11,null,-0.67],[1897,11,null,0.07],[1898,11,null,-0.32],[1899,11,null,-0.67],[1900,11,null,0.11],[1901,11,null,-0.29],[1902,11,null,-0.43],[1903,11,null,-0.79],[1904,11,null,-1.01],[1905,11,null,-0.83],[1906,11,null,0.04],[1907,11,null,-0.58],[1908,11,null,-1.15],[1909,11,null,-0.9],[1910,11,null,-0.4],[1911,11,null,-0.7],[1912,11,null,-0.04],[1913,11,null,-0.76],[1914,11,null,0.5],[1915,11,null,0.43],[1916,11,null,-0.32],[1917,11,null,-1.13],[1918,11,null,-0.63],[1919,11,null,0.02],[1920,11,null,-0.59],[1921,11,null,-0.13],[1922,11,null,-0.36],[1923,11,null,-0.31],[1924,11,null,-0.67],[1925,11,null,-0.86],[1926,11,null,-0.07],[1927,11,null,-0.4],[1928,11,null,0.25],[1929,11,null,-0.81],[1930,11,null,-0.18],[1931,11,null,-0.47],[1932,11,null,-0.38],[1933,11,null,-0.43],[1934,11,null,-0.27],[1935,11,null,-0.38],[1936,11,null,-0.07],[1937,11,null,-0.22],[1938,11,null,0.41],[1939,11,null,-0.54],[1940,11,null,-0.07],[1941,11,null,-0.25],[1942,11,null,0.34],[1943,11,null,-0.38],[1944,11,null,-0.11],[1945,11,null,-0.02],[1946,11,null,-0.54],[1947,11,null,-0.2],[1948,11,null,-0.41],[1949,11,null,-0.9],[1950,11,null,-0.45],[1951,11,null,-0.25],[1952,11,null,-0.23],[1953,11,null,-0.23],[1954,11,null,-0.16],[1955,11,null,-0.2],[1956,11,null,-0.74],[1957,11,null,0.25],[1958,11,null,0.49],[1959,11,null,0.54],[1960,11,null,-0.36],[1961,11,null,0.31],[1962,11,null,0.14],[1963,11,null,0.02],[1964,11,null,0.02],[1965,11,null,0.32],[1966,11,null,-0.36],[1967,11,null,-0.13],[1968,11,null,-0.18],[1969,11,null,0.32],[1970,11,null,0.31],[1971,11,null,0.09],[1972,11,null,0.41],[1973,11,null,1.06],[1974,11,null,-0.36],[1975,11,null,0.2],[1976,11,null,-0.49],[1977,11,null,0.31],[1978,11,null,0.16],[1979,11,null,0.81],[1980,11,null,1.19],[1981,11,null,0.77],[1982,11,null,0.38],[1983,11,null,0.88],[1984,11,null,0.02],[1985,11,null,0.7],[1986,11,null,0.7],[1987,11,null,0.63],[1988,11,null,1.4],[1989,11,null,0.49],[1990,11,null,0.99],[1991,11,null,1.03],[1992,11,null,0.5],[1993,11,null,0.67],[1994,11,null,0.5],[1995,11,null,0.59],[1996,11,null,1.1],[1997,11,null,0.74],[1998,11,null,1.75],[1999,11,null,0.88],[2000,11,null,0.47],[2001,11,null,0.59],[2002,11,null,1.33],[2003,11,null,1.31],[2004,11,null,1.03],[2005,11,null,1.78],[2006,11,null,1.06],[2007,11,null,1.3],[2008,11,null,0.99],[2009,11,null,1.58],[2010,11,null,1.12],[2011,11,null,0.52],[2012,11,null,0.79],[2013,11,null,2.11],[2014,11,null,1.75],[2015,11,null,1.67],[2016,11,null,1.91],[2017,11,null,1.76],[2018,11,null,1.75],[2019,11,null,2.16],[2020,11,null,1.91],[2021,11,null,1.26],[2022,11,null,1.35],[2023,11,null,1.76],[2024,11,null,2.39],[2025,11,null,2.09],[1895,12,null,-1.64],[1896,12,null,-1.76],[1897,12,null,-1.04],[1898,12,null,-1.93],[1899,12,null,-1.58],[1900,12,null,-0.83],[1901,12,null,-0.81],[1902,12,null,-2.45],[1903,12,null,-0.85],[1904,12,null,-0.52],[1905,12,null,-0.61],[1906,12,null,-0.09],[1907,12,null,-1.1],[1908,12,null,-0.77],[1909,12,null,-1.3],[1910,12,null,-0.23],[1911,12,null,-0.77],[1912,12,null,-1.64],[1913,12,null,-1.15],[1914,12,null,-0.79],[1915,12,null,-1.1],[1916,12,null,-1.03],[1917,12,null,-1.53],[1918,12,null,-1.98],[1919,12,null,-0.54],[1920,12,null,0.05],[1921,12,null,-0.34],[1922,12,null,-0.32],[1923,12,null,-0.29],[1924,12,null,0.36],[1925,12,null,-0.34],[1926,12,null,0.34],[1927,12,null,-0.31],[1928,12,null,0.47],[1929,12,null,-0.32],[1930,12,null,0.52],[1931,12,null,0.67],[1932,12,null,0.49],[1933,12,null,-0.32],[1934,12,null,1.06],[1935,12,null,0.2],[1936,12,null,0.2],[1937,12,null,1.42],[1938,12,null,1.82],[1939,12,null,0.52],[1940,12,null,1.3],[1941,12,null,-0.34],[1942,12,null,0.63],[1943,12,null,1.78],[1944,12,null,1.76],[1945,12,null,0.88],[1946,12,null,-0.41],[1947,12,null,1.19],[1948,12,null,0.05],[1949,12,null,0.13],[1950,12,null,-0.04],[1951,12,null,-0.04],[1952,12,null,0.11],[1953,12,null,1.33],[1954,12,null,1.03],[1955,12,null,-0.79],[1956,12,null,-0.31],[1957,12,null,-0.18],[1958,12,null,-0.81],[1959,12,null,0.54],[1960,12,null,0.18],[1961,12,null,-0.54],[1962,12,null,0.38],[1963,12,null,-0.72],[1964,12,null,-1.55],[1965,12,null,-0.92],[1966,12,null,-1.69],[1967,12,null,0.45],[1968,12,null,-0.88],[1969,12,null,-0.63],[1970,12,null,-0.59],[1971,12,null,-0.52],[1972,12,null,-0.76],[1973,12,null,0.11],[1974,12,null,-0.43],[1975,12,null,0.02],[1976,12,null,-0.2],[1977,12,null,0.18],[1978,12,null,-0.31],[1979,12,null,-0.85],[1980,12,null,0.4],[1981,12,null,1.82],[1982,12,null,-0.7],[1983,12,null,0.25],[1984,12,null,0.56],[1985,12,null,0.38],[1986,12,null,0.07],[1987,12,null,-0.81],[1988,12,null,0.94],[1989,12,null,0.59],[1990,12,null,0.99],[1991,12,null,1.46],[1992,12,null,-0.07],[1993,12,null,0.92],[1994,12,null,0.47],[1995,12,null,2.36],[1996,12,null,1.12],[1997,12,null,1.06],[1998,12,null,1.06],[1999,12,null,0.61],[2000,12,null,1.4],[2001,12,null,1.3],[2002,12,null,1.6],[2003,12,null,2.32],[2004,12,null,0.97],[2005,12,null,3.17],[2006,12,null,2.61],[2007,12,null,3.06],[2008,12,null,2.27],[2009,12,null,2],[2010,12,null,3.24],[2011,12,null,3.58],[2012,12,null,3.19],[2013,12,null,2.16],[2014,12,null,3.33],[2015,12,null,3.19],[2016,12,null,5.22],[2017,12,null,4.36],[2018,12,null,3.82],[2019,12,null,4.59],[2020,12,null,4.82],[2021,12,null,3.4],[2022,12,null,4.19],[2023,12,null,4.54],[2024,12,null,4.88],[2025,12,null,4.91],[1895,13,null,-0.13],[1896,13,null,-0.22],[1897,13,null,0.02],[1898,13,null,0.25],[1899,13,null,0.14],[1900,13,null,-0.05],[1901,13,null,-0.02],[1902,13,null,0.23],[1903,13,null,-0.07],[1904,13,null,-0.22],[1905,13,null,-0.25],[1906,13,null,0.18],[1907,13,null,-0.02],[1908,13,null,-0.5],[1909,13,null,0.13],[1910,13,null,-0.02],[1911,13,null,-0.05],[1912,13,null,0],[1913,13,null,0.13],[1914,13,null,-0.16],[1915,13,null,0.18],[1916,13,null,0.22],[1917,13,null,0.02],[1918,13,null,-0.11],[1919,13,null,-0.25],[1920,13,null,-0.29],[1921,13,null,0.04],[1922,13,null,-0.18],[1923,13,null,-0.23],[1924,13,null,-0.49],[1925,13,null,-0.56],[1926,13,null,-0.05],[1927,13,null,-0.13],[1928,13,null,-0.09],[1929,13,null,-0.4],[1930,13,null,-0.32],[1931,13,null,-0.22],[1932,13,null,-0.45],[1933,13,null,-0.38],[1934,13,null,-0.2],[1935,13,null,-0.05],[1936,13,null,0.07],[1937,13,null,-0.34],[1938,13,null,-0.09],[1939,13,null,0.29],[1940,13,null,-0.29],[1941,13,null,0.04],[1942,13,null,-0.2],[1943,13,null,-0.49],[1944,13,null,-0.11],[1945,13,null,-0.05],[1946,13,null,-0.05],[1947,13,null,-0.04],[1948,13,null,-0.04],[1949,13,null,0.14],[1950,13,null,0.04],[1951,13,null,-0.31],[1952,13,null,-0.23],[1953,13,null,-0.56],[1954,13,null,-0.5],[1955,13,null,0.13],[1956,13,null,0.13],[1957,13,null,0.32],[1958,13,null,-0.38],[1959,13,null,-0.09],[1960,13,null,-1.01],[1961,13,null,0.31],[1962,13,null,-0.7],[1963,13,null,-0.22],[1964,13,null,-0.36],[1965,13,null,0.07],[1966,13,null,0.11],[1967,13,null,0.34],[1968,13,null,-0.04],[1969,13,null,0.04],[1970,13,null,0.27],[1971,13,null,0.34],[1972,13,null,0.72],[1973,13,null,0.32],[1974,13,null,0.36],[1975,13,null,0.23],[1976,13,null,-0.14],[1977,13,null,0.34],[1978,13,null,0.14],[1979,13,null,-0.13],[1980,13,null,1.13],[1981,13,null,0.7],[1982,13,null,-0.09],[1983,13,null,0.41],[1984,13,null,0.5],[1985,13,null,0.16],[1986,13,null,0.25],[1987,13,null,0.04],[1988,13,null,0.72],[1989,13,null,0.14],[1990,13,null,0.34],[1991,13,null,0.9],[1992,13,null,0.52],[1993,13,null,-0.16],[1994,13,null,-0.02],[1995,13,null,0.11],[1996,13,null,0.65],[1997,13,null,0.04],[1998,13,null,0.02],[1999,13,null,-0.25],[2000,13,null,0.05],[2001,13,null,0.38],[2002,13,null,0.83],[2003,13,null,0.32],[2004,13,null,0.2],[2005,13,null,0.63],[2006,13,null,0.47],[2007,13,null,0.95],[2008,13,null,0.32],[2009,13,null,0.86],[2010,13,null,0.13],[2011,13,null,0.63],[2012,13,null,0.07],[2013,13,null,0.67],[2014,13,null,0.09],[2015,13,null,-0.31],[2016,13,null,0.18],[2017,13,null,0.41],[2018,13,null,0.61],[2019,13,null,0.5],[2020,13,null,0.68],[2021,13,null,0.11],[2022,13,null,0.52],[2023,13,null,0.45],[2024,13,null,0.52],[2025,13,null,0.9]];
+{
+const $=id=>document.getElementById(id);
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const KEY='is-it-warming-v1';
+let state=store.get(KEY)||{hyp:null,calc:[]};
+if(!state||typeof state!=='object')state={hyp:null,calc:[]};
+if(!Array.isArray(state.calc))state.calc=[];
+if(!Array.isArray(state.records))state.records=[];
+if(!state.work||typeof state.work!=='object')state.work={};
+if(state.hyp&&state.hyp.pos!=='warming'&&state.hyp.pos!=='little')state.hyp=null;
+if(state.hyp&&(typeof state.hyp.text!=='string'||typeof state.hyp.change!=='string'))state.hyp=null;
+const save=()=>store.set(KEY,state);
+
+/* year stripes from the national record */
+function buildStripes(){
+  const p=rows.filter(r=>r.location==='Contiguous U.S.').sort((a,b)=>a.year-b.year);
+  if(!p.length)return;
+  const v=p.map(q=>q.temp_f),lo=Math.min(...v),hi=Math.max(...v);
+  $('stripes').innerHTML='<div style="display:flex;height:100%">'+p.map(q=>{
+    const t=(q.temp_f-lo)/(hi-lo);
+    const c=t<.5?`rgb(${Math.round(42+178*t*2)},${Math.round(92+118*t*2)},${Math.round(168+42*t*2)})`
+                :`rgb(${Math.round(220-12*(t-.5)*2)},${Math.round(150-104*(t-.5)*2)},${Math.round(110-84*(t-.5)*2)})`;
+    return `<i style="flex:1;background:${c}" title="${q.year}"></i>`}).join('')+'</div>';
+}
+
+/* data */
+const LOC=['Onslow County','North Carolina','California','Kansas','New Mexico','Contiguous U.S.','North America','South America','Europe','Africa','Asia','Oceania','Arctic','Antarctic'];
+const DEC=[];for(let y=1890;y<=2020;y+=10)DEC.push(y+'s');
+const ORDER={location:LOC,decade:DEC};
+const BASE=['year','decade','location','temp_f','anomaly_f'];
+const NUMS=new Set(['year','temp_f','anomaly_f']);
+let rows=[];let cols=BASE.slice();let ctype={};
+BASE.forEach(c=>ctype[c]=NUMS.has(c)?'num':'cat');
+
+const fmt=(v,d)=>{if(v==null||Number.isNaN(v))return '';if(typeof v!=='number')return v;const s=v.toLocaleString(undefined,{maximumFractionDigits:d??2});return /^-0(\.0*)?$/.test(s)?s.slice(1):s};
+const fmtc=(c,v)=>c==='year'?String(Math.round(v)):fmt(v);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* tabs */
+let cur='about';
+function locked(){return !state.hyp}
+function show(t){
+  if(locked()&&['table','plot','stats','calc','other','stress','stands'].includes(t))t='hyp';
+  cur=t;
+  document.querySelectorAll('#tabs button').forEach(b=>{b.setAttribute('aria-selected',b.dataset.t===t);const lk=b.querySelector('.lk');if(lk)lk.remove();if(b.hasAttribute('data-lock')&&locked())b.insertAdjacentHTML('beforeend','<span class="lk">locked</span>')});
+  ['about','hyp','table','plot','stats','calc','other','stress','stands'].forEach(s=>$(s).hidden=s!==t);
+  const fl=$('filters');fl.hidden=!['table','plot','stats'].includes(t);if(!fl.hidden)$(t).querySelector('h2').after(fl);
+  $('predbar').hidden=t==='hyp';
+  if(t==='table')renderTable();if(t==='plot')drawPlot();if(t==='stats')renderStats();if(t==='calc')renderCalc();
+  if(t==='other')renderOther();if(t==='stress')renderStress();if(t==='stands')renderStands();
+}
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.t)});
+
+/* hypothesis */
+const posPicked=()=>{const r=document.querySelector('input[name=hpos]:checked');return r?r.value:''};
+const hReady=()=>{$('lockbtn').disabled=!(posPicked()&&$('htext').value.trim()&&$('hnum').value!==''&&$('hchange').value.trim())};
+['htext','hnum','hchange'].forEach(id=>$(id).addEventListener('input',hReady));
+document.querySelectorAll('input[name=hpos]').forEach(r=>r.addEventListener('change',hReady));
+$('lockbtn').onclick=()=>$('lockdlg').classList.add('on');
+$('lockno').onclick=()=>$('lockdlg').classList.remove('on');
+$('lockyes').onclick=()=>{state.hyp={pos:posPicked(),text:$('htext').value.trim(),num:parseFloat($('hnum').value),change:$('hchange').value.trim(),time:new Date().toISOString()};save();renderHyp();show('hyp')};
+const POSTXT={warming:'these temperature records show clear warming',little:'these temperature records show little or no warming'};
+const other=()=>state.hyp?(state.hyp.pos==='warming'?'little':'warming'):'';
+const sgn=(v,d)=>(v>=0?'+':'')+fmt(v,d);
+function hypText(){const h=state.hyp,t=new Date(h.time);return `My position (locked ${t.toLocaleString()}):\nI think ${POSTXT[h.pos]}.\n${h.text}\n\nMy prediction: over the last 100 years the average temperature in these records has changed by ${sgn(h.num,1)} \u00b0F.\n\nWhat would change my mind:\n${h.change}`}
+function renderHyp(){
+  const h=state.hyp;$('hypform').hidden=!!h;$('hypdone').hidden=!h;
+    if(!h){$('predbar').innerHTML='';return}
+  const card=`<b>My position</b> <span class="mute small">locked ${esc(new Date(h.time).toLocaleString())}</span><br>I think ${esc(POSTXT[h.pos])}.<br>${esc(h.text)}<br><b>My prediction:</b> ${esc(sgn(h.num,1))} \u00b0F over 100 years<br><b>What would change my mind:</b> ${esc(h.change)}`;
+  $('hypcard').innerHTML=card;$('predbar').innerHTML=`<div class="pred small">${card}</div>`;
+}
+$('copyhyp').onclick=async()=>{const t=hypText();try{await navigator.clipboard.writeText(t);$('copied').textContent='Copied.'}catch(e){const b=$('copybox');b.style.display='block';b.value=t;b.select();$('copied').textContent='Select the text below and copy it.'}};
+$('reset').onclick=()=>$('resetdlg').classList.add('on');
+$('resetno').onclick=()=>$('resetdlg').classList.remove('on');
+$('resetyes').onclick=()=>{store.del(KEY);state={hyp:null,calc:[]};cols=BASE.slice();Object.keys(ctype).forEach(k=>{if(!BASE.includes(k))delete ctype[k]});rows.forEach(r=>{for(const k in r)if(!BASE.includes(k))delete r[k]});$('resetdlg').classList.remove('on');$('htext').value='';$('hnum').value='';$('hchange').value='';hReady();renderHyp();buildControls();show('about')};
+
+/* filters */
+const FCATS=['decade'];
+const MAXLOC=5;
+let filt={a0:1895,a1:2025,locs:[]};
+function syncLocSplit(){
+  if(filt.locs.length>1&&!P.by&&P.x!=='location'&&P.y&&(P.mode==='vs'||P.mode==='dist')){
+    P.by='location';if(cur==='plot')buildControls();
+  }
+}
+function buildFilters(){
+  const full=filt.locs.length>=MAXLOC;
+  $('fbox').innerHTML=`<label for="fa0">Years from<input type="number" id="fa0" min="1895" max="2025" value="${filt.a0}"></label><label for="fa1">to<input type="number" id="fa1" min="1895" max="2025" value="${filt.a1}"></label>`+
+  FCATS.map(c=>`<label for="f_${c}">${c}<select id="f_${c}"><option value="">Any</option>${ORDER[c].map(v=>`<option${filt[c]===v?' selected':''}>${esc(v)}</option>`).join('')}</select></label>`).join('')+
+  `<button class="b" id="fclear">Clear filters</button>`+
+  `<div style="flex-basis:100%;margin-top:10px">`+
+    `<div class="small" style="margin-bottom:4px">Places to analyse <span class="mute">&mdash; pick up to ${MAXLOC}. None picked means all ${LOC.length}.</span> <b id="floccount"></b></div>`+
+    `<div class="row" style="gap:2px 14px">`+
+      LOC.map(v=>{const on=filt.locs.includes(v);
+        return `<label class="inl" style="min-height:30px${!on&&full?';opacity:.45':''}"><input type="checkbox" class="f_loc" value="${esc(v)}"${on?' checked':''}${!on&&full?' disabled':''}>${esc(v)}</label>`}).join('')+
+    `</div>`+
+    `<div class="row" style="gap:10px;margin-top:6px"><button class="b" id="flocnone">All places</button><button class="b" id="flocus">A US sample</button><button class="b" id="flocpole">Pole to pole</button></div>`+
+  `</div>`;
+  $('floccount').textContent=filt.locs.length?`${filt.locs.length} of ${MAXLOC} picked`:'';
+  FCATS.forEach(c=>{const s=$('f_'+c);if(filt[c])s.value=filt[c];s.onchange=()=>{filt[c]=s.value;refresh()}});
+  document.querySelectorAll('.f_loc').forEach(b=>b.onchange=()=>{
+    if(b.checked){if(filt.locs.length>=MAXLOC){b.checked=false;return}filt.locs.push(b.value)}
+    else filt.locs=filt.locs.filter(v=>v!==b.value);
+    filt.locs=LOC.filter(v=>filt.locs.includes(v));
+    buildFilters();syncLocSplit();refresh()});
+  $('flocnone').onclick=()=>{filt.locs=[];buildFilters();refresh()};
+  const preset=names=>{filt.locs=LOC.filter(v=>names.includes(v)).slice(0,MAXLOC);buildFilters();syncLocSplit();refresh()};
+  $('flocus').onclick=()=>preset(['Onslow County','North Carolina','Kansas','California','Contiguous U.S.']);
+  $('flocpole').onclick=()=>preset(['Arctic','Europe','Africa','Oceania','Antarctic']);
+  $('fa0').onchange=()=>{filt.a0=+$('fa0').value||1895;refresh()};$('fa1').onchange=()=>{filt.a1=+$('fa1').value||2025;refresh()};
+  $('fclear').onclick=()=>{filt={a0:1895,a1:2025,locs:[]};buildFilters();refresh()};
+}
+function view(){return rows.filter(r=>r.year>=filt.a0&&r.year<=filt.a1&&(!filt.locs.length||filt.locs.includes(r.location))&&FCATS.every(c=>!filt[c]||r[c]===filt[c]))}
+let V=[];
+function refresh(){V=view();$('fcount').textContent=`showing ${V.length.toLocaleString()} of ${rows.length.toLocaleString()} readings`;page=0;if(cur==='table')renderTable();if(cur==='plot')drawPlot();if(cur==='stats')renderStats()}
+
+/* table */
+let page=0,sortC='year',sortD=1;const PS=100;
+function sorted(a){const c=sortC;return a.slice().sort((x,y)=>{const p=x[c],q=y[c];return (p<q?-1:p>q?1:0)*sortD})}
+function renderTable(){
+  const s=sorted(V),n=Math.max(1,Math.ceil(s.length/PS));page=Math.min(page,n-1);const part=s.slice(page*PS,page*PS+PS);
+  $('tbl').innerHTML=`<table><thead><tr>${cols.map(c=>`<th class="sort${ctype[c]==='num'?' n':''}" data-c="${c}">${esc(c)}${sortC===c?(sortD>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>${part.map(r=>`<tr>${cols.map(c=>`<td${ctype[c]==='num'?' class="n"':''}>${esc(fmtc(c,r[c]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  $('pginfo').textContent=`Rows ${s.length?page*PS+1:0}–${Math.min(s.length,(page+1)*PS)} of ${s.length.toLocaleString()}`;
+  $('prev').disabled=page===0;$('next').disabled=page>=n-1;
+}
+$('tbl').addEventListener('click',e=>{const th=e.target.closest('th');if(!th)return;const c=th.dataset.c;if(sortC===c)sortD=-sortD;else{sortC=c;sortD=1}renderTable()});
+$('prev').onclick=()=>{page--;renderTable()};$('next').onclick=()=>{page++;renderTable()};
+
+/* helpers */
+const numCols=()=>cols.filter(c=>ctype[c]==='num');
+const catCols=()=>cols.filter(c=>ctype[c]==='cat'||c==='year');
+function levels(c,a){const set=new Set(a.map(r=>r[c]));const o=ORDER[c];if(o)return o.filter(v=>set.has(v));return [...set].sort((x,y)=>typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y)))}
+function catNums(c,a){if(!c)return null;const L=levels(c,a);if(L.length<3)return null;const X=[];
+  for(const l of L){const m=/^(-?\d+(?:\.\d+)?)s?$/.exec(String(l).trim());if(!m)return null;X.push(+m[1])}
+  if(new Set(X).size!==X.length)return null;return{L,X}}
+function regress(pts){
+  const n=pts.length; if(n<3) return null;
+  let sx=0,sy=0; for(const [x,y] of pts){sx+=x;sy+=y}
+  const mx=sx/n,my=sy/n; let sxx=0,sxy=0,syy=0;
+  for(const [x,y] of pts){sxx+=(x-mx)**2;sxy+=(x-mx)*(y-my);syy+=(y-my)**2}
+  if(!sxx) return null;
+  const b=sxy/sxx, a=my-b*mx;
+  const sse=Math.max(0,syy-b*sxy), s=Math.sqrt(sse/(n-2));
+  return {a,b,seb:s/Math.sqrt(sxx), sea:s*Math.sqrt(1/n+mx*mx/sxx),
+          n, r2:syy?1-sse/syy:0, resid:s,
+          xmin:Math.min(...pts.map(q=>q[0])), xmax:Math.max(...pts.map(q=>q[0]))};
+}
+const pm=(v,e)=>{const d=Math.max(0,Math.min(8,(e>0?Math.ceil(-Math.log10(e)):3)+1));
+  return `${v.toFixed(d)} \u00b1 ${e.toFixed(d)}`};
+function summ(vals){const v=vals.filter(x=>typeof x==='number'&&!Number.isNaN(x)).sort((a,b)=>a-b);const n=v.length;if(!n)return{n:0};const mean=v.reduce((a,b)=>a+b,0)/n;const sd=n>1?Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/(n-1)):0;const med=n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2;return{n,mean,med,sd,se:sd/Math.sqrt(n),min:v[0],max:v[n-1],sum:mean*n}}
+const opt=(arr,sel,blank)=>(blank?`<option value="">${blank}</option>`:'')+arr.map(c=>`<option${c===sel?' selected':''}>${esc(c)}</option>`).join('');
+
+/* stats */
+function buildStats(){
+  const sv=$('sval').value,g=$('sgrp').value,g2=$('sgrp2').value;
+  $('sval').innerHTML=opt(numCols(),numCols().includes(sv)?sv:'','(choose)');
+  $('sgrp').innerHTML=opt(catCols(),g,'(none)');$('sgrp2').innerHTML=opt(catCols(),g2,'(none)');
+}
+['sval','sgrp','sgrp2'].forEach(id=>$(id).addEventListener('change',renderStats));
+let statRows=[];
+function renderStats(){
+  const v=$('sval').value,g=$('sgrp').value,g2=$('sgrp2').value;const gs=[g,g2].filter(Boolean);
+  if(!v){statRows=[];$('stbl').innerHTML='<p class="mute">Choose which values to summarize.</p>';return}
+  let groups=[[[],V]];
+  gs.forEach(c=>{const nx=[];groups.forEach(([k,a])=>levels(c,a).forEach(l=>nx.push([k.concat(l),a.filter(r=>r[c]===l)])));groups=nx});
+  statRows=groups.map(([k,a])=>[k,summ(a.map(r=>r[v]))]);
+  const head=gs.length?gs:['group'];
+  $('stbl').innerHTML=`<table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join('')}<th class="n">n</th><th class="n">mean</th><th class="n">median</th><th class="n">SD</th><th class="n">SE</th><th class="n">min</th><th class="n">max</th></tr></thead><tbody>${statRows.map(([k,s])=>`<tr>${(k.length?k:['All selected readings']).map(x=>`<td>${esc(x)}</td>`).join('')}<td class="n">${fmt(s.n)}</td><td class="n">${fmt(s.mean,1)}</td><td class="n">${fmt(s.med,1)}</td><td class="n">${fmt(s.sd,1)}</td><td class="n">${fmt(s.se,1)}</td><td class="n">${fmt(s.min,1)}</td><td class="n">${fmt(s.max,1)}</td></tr>`).join('')}</tbody></table>`;
+}
+$('scopy').onclick=async()=>{const g=[$('sgrp').value,$('sgrp2').value].filter(Boolean);const lines=[[...(g.length?g:['group']),'n','mean','median','SD','SE','min','max'].join('\t')].concat(statRows.map(([k,s])=>[...(k.length?k:['All']),s.n,s.mean,s.med,s.sd,s.se,s.min,s.max].join('\t')));try{await navigator.clipboard.writeText(lines.join('\n'));$('scopied').textContent='Copied. Paste into Excel or a post.'}catch(e){$('scopied').textContent='Copy is blocked here.'}};
+
+/* calculator */
+const FN={log:Math.log,log10:Math.log10,sqrt:Math.sqrt,abs:Math.abs,round:Math.round};
+function compile(expr){
+  const names=cols.filter(c=>/^[A-Za-z_]\w*$/.test(c));
+  const cache={};
+  const mean=c=>{if(!(c in ctype))throw Error(`No column named "${c}"`);const k='m|'+c;if(!(k in cache))cache[k]=summ(rows.map(r=>r[c])).mean;return cache[k]};
+  const f=new Function('__r','__f','__mb',...names,`const {log,log10,sqrt,abs,round}=__f;const mean=__f.mean;const meanBy=(c,...g)=>__mb(__r,c,g);return (${expr});`);
+  const mb=(r,c,g)=>{if(!(c in ctype))throw Error(`No column named "${c}"`);g.forEach(x=>{if(!(x in ctype))throw Error(`No column named "${x}"`)});const k='b|'+c+'|'+g.join('|');if(!cache[k]){const acc=new Map();rows.forEach(q=>{const key=g.map(x=>q[x]).join('\u0001');const e=acc.get(key)||[0,0];if(typeof q[c]==='number'&&!Number.isNaN(q[c])){e[0]+=q[c];e[1]++}acc.set(key,e)});cache[k]=acc}const e=cache[k].get(g.map(x=>r[x]).join('\u0001'));return e&&e[1]?e[0]/e[1]:NaN};
+  const fns=Object.assign({mean},FN);
+  return r=>{let v=f(r,fns,mb,...names.map(n=>r[n]));if(typeof v==='boolean')v=v?1:0;return v};
+}
+function applyCalc(c){const fn=compile(c.expr);rows.forEach(r=>{r[c.name]=fn(r)});const s=rows.find(r=>r[c.name]!=null&&!Number.isNaN(r[c.name]));ctype[c.name]=s&&typeof s[c.name]==='string'?'cat':'num';if(!cols.includes(c.name))cols.push(c.name)}
+$('cadd').onclick=()=>{
+  const name=$('cname').value.trim(),expr=$('cexpr').value.trim();$('cerr').textContent='';
+  if(!/^[A-Za-z_]\w*$/.test(name)){$('cerr').textContent='Use a name made of letters, digits and underscores, starting with a letter.';return}
+  if(cols.includes(name)){$('cerr').textContent='That column already exists. Pick another name.';return}
+  if(!expr){$('cerr').textContent='Enter a formula.';return}
+  try{applyCalc({name,expr})}catch(e){$('cerr').textContent='That formula did not work: '+e.message;rows.forEach(r=>delete r[name]);delete ctype[name];cols=cols.filter(c=>c!==name);return}
+  state.calc.push({name,expr});save();$('cname').value='';$('cexpr').value='';buildControls();renderCalc();refresh();
+};
+function renderCalc(){
+  $('clist').innerHTML=state.calc.length?`<table><thead><tr><th>Name</th><th>Formula</th><th></th></tr></thead><tbody>${state.calc.map((c,i)=>`<tr><td><code>${esc(c.name)}</code></td><td><code>${esc(c.expr)}</code></td><td><button class="b" data-del="${i}">Remove</button></td></tr>`).join('')}</tbody></table>`:'None yet.';
+  const show=['year','location','temp_f','anomaly_f',...state.calc.map(c=>c.name)];
+  $('cprev').innerHTML=`<table><thead><tr>${show.map(c=>`<th${ctype[c]==='num'?' class="n"':''}>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,8).map(r=>`<tr>${show.map(c=>`<td${ctype[c]==='num'?' class="n"':''}>${esc(fmt(r[c],3))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+$('clist').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;const c=state.calc.splice(+b.dataset.del,1)[0];rows.forEach(r=>delete r[c.name]);delete ctype[c.name];cols=cols.filter(x=>x!==c.name);save();buildControls();renderCalc();refresh()});
+
+/* plot controls */
+const VSTY=['dots','line','dots and line','bars'];
+const CSTY=['bars','points','points joined by a line','dots (every reading)'];
+const P={mode:'vs',y:'',x:'',by:'',type:'none',vstyle:'dots',cstyle:'bars',split:'',stat:'mean',spread:'none',zero:true,agg:'monthly',draw:'lines',bins:40,norm:false,avg:true,abins:20,fit:false,sx:'',sy:'',factors:[],ia:'',ib:'',sespread:'none',az:135,el:30};
+const CATX=new Set([]);
+function xKind(c){if(c==='date')return 'date';if(ctype[c]==='cat'||CATX.has(c))return 'cat';return 'num'}
+function axisBins(c,a){
+  if(!c)return{L:[],key:()=>undefined,binned:false};
+  const F=(v)=>typeof fmtc==='function'?fmtc(c,v):fmt(v);
+  if(ctype[c]!=='num')return{L:levels(c,a),key:r=>r[c],binned:false};
+  const vs=a.map(r=>r[c]).filter(v=>typeof v==='number'&&!Number.isNaN(v));
+  if(!vs.length)return{L:[],key:()=>undefined,binned:false};
+  const u=[...new Set(vs)].sort((x,y)=>x-y);
+  if(u.length<=12)return{L:u.map(F),key:r=>typeof r[c]==='number'&&!Number.isNaN(r[c])?F(r[c]):undefined,binned:false};
+  const lo=u[0],hi=u[u.length-1],nb=8,w=(hi-lo)/nb||1;
+  const lab=i=>`${F(lo+i*w)}–${F(lo+(i+1)*w)}`;
+  const L=[];for(let i=0;i<nb;i++)L.push(lab(i));
+  return{L,key:r=>{const v=r[c];if(typeof v!=='number'||Number.isNaN(v))return undefined;return lab(Math.min(nb-1,Math.max(0,Math.floor((v-lo)/w))))},binned:true};
+}
+function plotType(){if(P.mode==='vs'&&(!P.y||!P.x))return 'none';if((P.mode==='dist'||P.mode==='main')&&!P.y)return 'none';if((P.mode==='inter'||P.mode==='d3')&&(!P.y||!P.ia||!P.ib))return 'none';if(P.mode==='d3')return 'g3d';if(P.mode==='dist')return 'hist';if(P.mode==='main')return 'main';if(P.mode==='inter')return 'inter';const k=xKind(P.x);return k==='date'?'line':k==='cat'?'bar':'scatter'}
+function buildPlot(){
+  const N=numCols();if(P.y&&!N.includes(P.y))P.y='';
+  const X=cols.filter(c=>c!==P.y);if(P.x&&!X.includes(P.x))P.x='';
+  const B=cols.filter(c=>c!==P.x&&c!==P.y);if(P.by&&!B.includes(P.by))P.by='';
+  const sel=(id,lab,arr,v,blank)=>`<label for="${id}">${lab}<select id="${id}">${opt(arr,v,blank)}</select></label>`;
+  P.type=plotType();
+  const MODES={vs:'response vs. a variable',dist:'distribution of the response',main:'main effects',inter:'interaction',d3:'two variables in 3D'};
+  let h=sel('p_mode','Plot',Object.values(MODES),MODES[P.mode]);
+  h+=sel('p_y',P.mode==='d3'?'Height (z)':'Response (y)',N,P.y,'(choose)');
+  if(P.mode==='vs')h+=sel('p_x','Plotted against (x)',X,P.x,'(choose)');
+  if(P.mode==='vs'||P.mode==='dist')h+=sel('p_by','By',B,P.by,'(none)');
+  if(P.mode==='vs'&&P.x&&P.y)h+=xKind(P.x)==='num'?sel('p_vstyle','Draw as',VSTY,P.vstyle):sel('p_cstyle','Draw as',CSTY,P.cstyle);
+  const C=catCols();
+  const AXC=['d3','inter','main'].includes(P.mode)?cols.filter(c=>c!==P.y):C;P.factors=P.factors.filter(f=>AXC.includes(f));if(P.ia&&!AXC.includes(P.ia))P.ia='';if(P.ib&&(!AXC.includes(P.ib)||P.ib===P.ia))P.ib='';
+  if(P.mode==='main')h+=`<fieldset style="border:0;padding:0;margin:0"><legend style="font-size:14px;font-weight:500;color:var(--mute);margin-bottom:4px">Variables (up to 4)</legend><div class="row" style="gap:2px 16px">${AXC.map(c=>`<label class="inl" style="min-height:32px"><input type="checkbox" class="p_fac" value="${esc(c)}"${P.factors.includes(c)?' checked':''}${!P.factors.includes(c)&&P.factors.length>=4?' disabled':''}>${esc(c)}</label>`).join('')}</div></fieldset>`;
+  if(P.mode==='inter')h+=sel('p_ia','Variable on x',AXC,P.ia,'(choose)')+sel('p_ib','One line for each',AXC.filter(c=>c!==P.ia),P.ib,'(choose)');
+  if(P.mode==='d3')h+=sel('p_ia','Variable on x',AXC,P.ia,'(choose)')+sel('p_ib','Variable on y',AXC.filter(c=>c!==P.ia),P.ib,'(choose)')+
+    `<label for="p_az">Turn<input type="range" id="p_az" min="0" max="360" step="1" value="${P.az}"></label>`+
+    `<label for="p_el">Tilt<input type="range" id="p_el" min="8" max="70" step="1" value="${P.el}"></label>`+
+    `<button class="b" id="p_reset3d">Reset view</button>`;
+  if(P.mode==='main'||P.mode==='inter')h+=sel('p_se','Spread bars',['none','±1 SE'],P.sespread);
+  if(P.type==='bar')h+=sel('p_stat','Show',['mean','median','sum','count'],P.stat)+sel('p_spread','Spread bars',['none','±1 SD','±1 SE'],P.spread)+`<label class="inl"><input type="checkbox" id="p_zero"${P.zero?' checked':''}>y axis starts at 0</label>`+(catNums(P.x,V)?`<label class="inl"><input type="checkbox" id="p_fit"${P.fit?' checked':''}>fit a straight line</label>`:'');
+  if(P.type==='line')h+=sel('p_agg','Average per',['day','week','month','year'],{daily:'day',weekly:'week',monthly:'month',yearly:'year'}[P.agg])+sel('p_draw','Draw as',['lines','dots'],P.draw)+`<label class="inl"><input type="checkbox" id="p_zero"${P.zero?' checked':''}>y axis starts at 0</label>`;
+  if(P.type==='scatter')h+=(P.vstyle==='bars'?`<label class="inl"><input type="checkbox" id="p_zero"${P.zero?' checked':''}>y axis starts at 0</label>`:'')+(P.vstyle==='dots'||P.vstyle==='dots and line'?`<label class="inl"><input type="checkbox" id="p_avg"${P.avg?' checked':''}>show averages</label><label for="p_abins">in how many x ranges<input type="number" id="p_abins" min="2" max="100" value="${P.abins}"></label>`:'')+`<label class="inl"><input type="checkbox" id="p_fit"${P.fit?' checked':''}>fit a straight line</label>`;
+  if(P.type==='hist')h+=`<label for="p_bins">Bins<input type="number" id="p_bins" min="3" max="200" value="${P.bins}"></label><label class="inl"><input type="checkbox" id="p_norm"${P.norm?' checked':''}>show as % of each group</label>`;
+  $('pctl').innerHTML=h;
+  const on=(id,f,rebuild)=>{const e=$(id);if(e)e.onchange=()=>{f(e);if(rebuild)buildPlot();drawPlot()}};
+  on('p_mode',e=>P.mode=Object.keys(MODES).find(k=>MODES[k]===e.value),1);
+  on('p_ia',e=>P.ia=e.value,1);on('p_ib',e=>P.ib=e.value,1);on('p_se',e=>P.sespread=e.value);
+  const az=$('p_az'),el=$('p_el'),rs=$('p_reset3d');
+  if(az)az.oninput=()=>{P.az=+az.value;drawPlot()};
+  if(el)el.oninput=()=>{P.el=+el.value;drawPlot()};
+  if(rs)rs.onclick=()=>{P.az=135;P.el=30;buildPlot();drawPlot()};
+  document.querySelectorAll('.p_fac').forEach(cb=>cb.onchange=()=>{P.factors=[...document.querySelectorAll('.p_fac:checked')].map(x=>x.value);buildPlot();drawPlot()});
+  on('p_y',e=>P.y=e.value,1);on('p_x',e=>P.x=e.value,1);on('p_by',e=>P.by=e.value,1);
+  on('p_stat',e=>P.stat=e.value);on('p_spread',e=>P.spread=e.value);on('p_zero',e=>P.zero=e.checked);
+  on('p_agg',e=>P.agg={day:'daily',week:'weekly',month:'monthly',year:'yearly'}[e.value]);on('p_draw',e=>P.draw=e.value);
+  on('p_fit',e=>P.fit=e.checked);
+  on('p_vstyle',e=>{P.vstyle=e.value;P.zero=(e.value==='bars')},1);
+  on('p_cstyle',e=>{P.cstyle=e.value;P.zero=(e.value==='bars')},1);
+  on('p_avg',e=>P.avg=e.checked);on('p_abins',e=>P.abins=Math.max(2,Math.min(100,+e.value||20)));
+  on('p_bins',e=>P.bins=Math.max(3,Math.min(200,+e.value||40)));on('p_norm',e=>P.norm=e.checked);
+}
+function buildControls(){buildStats();buildPlot()}
+
+/* drawing */
+const cv=$('cv'),tip=$('tip');let hits=[];let lastFit=null;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const rgbOf=c=>{const m=String(c).match(/[\d.]+/g);return m?m.slice(0,3).map(Number):[128,128,128]};
+function resolveColor(v){const d=document.createElement('span');d.style.color=`var(${v})`;document.body.appendChild(d);const c=getComputedStyle(d).color;d.remove();return c}
+const rowLab=r=>{const q=[];if(r.date!=null)q.push(r.date);else{if(r.location!=null)q.push(r.location);if(r.year!=null)q.push(r.year)}return q.length?q.join(' ')+': ':''};
+function ticks(lo,hi,n){if(hi===lo){hi=lo+1}const raw=(hi-lo)/n,p=10**Math.floor(Math.log10(raw)),m=raw/p,st=(m<1.5?1:m<3?2:m<7?5:10)*p;const out=[];for(let t=Math.ceil(lo/st)*st;t<=hi+st*1e-9;t+=st)out.push(+t.toFixed(10));return out}
+function drawPlot(){
+  if(cur!=='plot')return;
+  P.type=plotType();$('fig').classList.toggle('tall',P.type==='g3d');$('fig').classList.toggle('grab',P.type==='g3d');P.split=P.type==='inter'?P.ib:P.type==='main'?'':P.by;P.sx=P.x;P.sy=P.y;
+  const fig=$('fig'),W=fig.clientWidth,H=fig.clientHeight,dpr=window.devicePixelRatio||1;
+  cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
+  const ink=resolveColor('--ink'),mute=resolveColor('--mute'),line=resolveColor('--line'),bgCol=resolveColor('--bg');
+  const S=[1,2,3,4,5,6,7,8].map(i=>resolveColor('--s'+i));
+  hits=[];g.font='14px Inter, sans-serif';$('fitout').innerHTML='';
+  if(P.type==='none'){
+    const msg=P.mode==='vs'?'Choose a response and a variable to plot it against.'
+      :P.mode==='d3'?'Choose a response and two variables.'
+      :P.mode==='inter'?'Choose a response, a variable for the x axis, and one to draw a line for.'
+      :'Choose a response.';
+    $('legend').innerHTML='';$('cap').textContent='';
+    g.fillStyle=mute;g.textAlign='center';g.textBaseline='middle';g.fillText(msg,W/2,H/2);return}
+  const M={l:86,r:20,t:P.type==='main'?44:20,b:P.type==='main'||P.type==='inter'?104:54};const pw=W-M.l-M.r,ph=H-M.t-M.b;
+  const SPX=P.split?axisBins(P.split,V):null;
+  const splitL=SPX?SPX.L.slice(0,8):[null];
+  const tooMany=SPX&&SPX.L.length>8;
+  const leg=P.split?splitL.map((l,i)=>`<span><i style="background:${S[i]}"></i>${esc(P.split)} = ${esc(l)}</span>`).join('')+(tooMany?'<span class="mute">Only the first 8 groups are drawn.</span>':''):'';
+  $('legend').innerHTML=leg;
+  const xk=`Because ${P.x} is `;
+  const b3=P.type==='g3d'?[P.ia,P.ib].filter(c=>axisBins(c,V).binned)
+    :P.type==='inter'?[P.ia,P.ib].filter(c=>axisBins(c,V).binned)
+    :P.type==='main'?P.factors.filter(c=>axisBins(c,V).binned)
+    :P.split&&axisBins(P.split,V).binned?[P.split]:[];
+  const bnote=b3.length?` ${b3.join(' and ')} ${b3.length>1?'are numbers, so they are':'is a number, so it is'} grouped into 8 equal ranges.`:'';
+  $('cap').textContent=(P.type==='g3d'?`Each column is one combination of ${P.ia} and ${P.ib}. Its height is the mean ${P.y} for the readings in that combination. Drag the chart, or use Turn and Tilt, to see it from another angle. Empty combinations are left blank. The height axis is scaled to the columns rather than starting at zero, so read the numbers on it before comparing heights by eye.`:P.type==='main'?`Each panel shows the mean ${P.y} at each level of one variable. The dashed line is the mean ${P.y} over all the selected readings.`:P.type==='inter'?`Each line connects the mean ${P.y} at each level of ${P.ia}, for one level of ${P.ib}.`:P.type==='hist'?`Each bar counts the readings whose ${P.y} fell in that range.${P.norm?' Heights are the percent of each group\'s readings, so groups of different sizes can be compared.':''}`:P.type==='bar'?(P.cstyle==='dots (every reading)'?`Each dot is one reading, spread out sideways inside its ${P.x} group so they do not sit on top of each other. The sideways position means nothing.`:`${P.cstyle==='bars'?'Each bar':'Each point'} shows the ${P.stat} of ${P.y} over the readings at one value of ${P.x}.${P.cstyle==='points joined by a line'?' The line joins them in the order shown on the x axis.':''}`):P.type==='line'?`${xk}a date, each point is the average ${P.y} per day over one ${P.agg.replace('daily','day').replace('weekly','week').replace('monthly','month').replace('yearly','year')}.`:(P.vstyle==='bars'?`Each bar is the mean ${P.y} at one value of ${P.x}.`:P.vstyle==='line'?`The line joins the mean ${P.y} at each value of ${P.x}.`:`Each dot is one reading.${P.vstyle==='dots and line'?` The line joins the mean ${P.y} at each value of ${P.x}.`:''}`)+(P.avg&&(P.vstyle==='dots'||P.vstyle==='dots and line')?` The heavier line joins the average ${P.y} in each of ${P.abins} equal ranges of ${P.x}.`:'')+(P.vstyle==='bars'&&new Set(V.map(r=>r[P.x])).size*splitL.length>280?` That is ${new Set(V.map(r=>r[P.x])).size} values of ${P.x}${splitL.length>1?` in each of ${splitL.length} groups`:''}, so the bars are too narrow to read — filter to fewer, or draw a line instead.`:''))+bnote;
+  if(!V.length){g.fillStyle=mute;g.fillText('No readings match the filters.',M.l,M.t+30);return}
+  const sub=l=>l===null?V:V.filter(r=>SPX.key(r)===l);
+  const yAxis=(lo,hi,label)=>{const ts=ticks(lo,hi,6);g.strokeStyle=line;g.fillStyle=mute;g.textAlign='right';g.textBaseline='middle';ts.forEach(t=>{const y=M.t+ph-(t-lo)/(hi-lo)*ph;if(y<M.t-1||y>M.t+ph+1)return;g.beginPath();g.moveTo(M.l,y);g.lineTo(M.l+pw,y);g.stroke();g.fillText(fmt(t),M.l-8,y)});g.save();g.translate(14,M.t+ph/2);g.rotate(-Math.PI/2);g.textAlign='center';g.fillStyle=ink;g.fillText(label,0,0);g.restore()};
+  const xLabel=t=>{g.fillStyle=ink;g.textAlign='center';g.textBaseline='alphabetic';g.fillText(t,M.l+pw/2,H-8)};
+  if(P.type==='bar'){
+    const cats=levels(P.x,V);const data=cats.map(c=>splitL.map(l=>{const a=sub(l).filter(r=>r[P.x]===c);const s=summ(a.map(r=>r[P.y]));const v=P.stat==='count'?a.length:s.n?(P.stat==='mean'?s.mean:P.stat==='median'?s.med:s.sum):NaN;const e=P.stat==='mean'&&P.spread!=='none'&&s.n?(P.spread==='±1 SD'?s.sd:s.se):0;return{v,e,n:a.length}}));
+    const isDots=P.cstyle==='dots (every reading)';
+    const all=data.flat().filter(d=>!Number.isNaN(d.v));let hi=Math.max(...all.map(d=>d.v+d.e)),lo=Math.min(...all.map(d=>d.v-d.e));
+    if(isDots){const vs=V.map(r=>r[P.y]).filter(v=>typeof v==='number'&&!Number.isNaN(v));
+      if(vs.length){hi=Math.max(hi,Math.max(...vs));lo=Math.min(lo,Math.min(...vs))}}
+    if(P.zero&&!isDots)lo=Math.min(0,lo);else{const pad=(hi-lo)*.1||1;lo-=pad;hi+=pad}hi+=(hi-lo)*.04;
+    yAxis(lo,hi,isDots?P.y:`${P.stat==='count'?'number of readings':P.stat+' of '+P.y}`);
+    const bw=pw/cats.length,inner=bw*.78/splitL.length;
+    const mk=!isDots&&P.cstyle!=='bars';
+    g.textAlign='center';g.textBaseline='top';
+    const every=Math.ceil(cats.length/Math.max(1,Math.floor(pw/70)));
+    const Yv=v=>M.t+ph-(v-lo)/(hi-lo)*ph;
+    const dodge=j=>mk&&splitL.length>1?(j-(splitL.length-1)/2)*Math.min(11,bw*.22):0;
+    const tipOf=(c,j,d)=>`${P.x} = ${c}${splitL[j]!==null?`, ${P.split} = ${splitL[j]}`:''}: ${fmt(d.v,2)}${d.e?` ± ${fmt(d.e,2)}`:''} (n = ${d.n})`;
+    const jit=k=>{const s=Math.sin(k*12.9898)*43758.5453;return (s-Math.floor(s))-0.5};
+    if(isDots)cats.forEach((c,i)=>{splitL.forEach((l,j)=>{
+      const rs=sub(l).filter(r=>r[P.x]===c&&typeof r[P.y]==='number'&&!Number.isNaN(r[P.y]));
+      if(!rs.length)return;
+      const half=Math.min(bw*.34,30)/Math.max(1,splitL.length);
+      const cx=M.l+(i+.5)*bw+(splitL.length>1?(j-(splitL.length-1)/2)*Math.min(14,bw*.26):0);
+      g.fillStyle=S[j];g.globalAlpha=.6;
+      rs.forEach((r,k)=>{const x=cx+jit(k+i*7919+j*104729)*2*half,y=Yv(r[P.y]);
+        g.beginPath();g.arc(x,y,2.4,0,7);g.fill();
+        hits.push({px:x,py:y,t:`${rowLab(r)}${P.x} = ${c}${splitL[j]!==null?`, ${P.split} = ${splitL[j]}`:''}: ${P.y} = ${fmt(r[P.y])}`})});
+      g.globalAlpha=1})});
+    if(P.cstyle==='points joined by a line')splitL.forEach((l,j)=>{
+      const pts=cats.map((c,i)=>({x:M.l+(i+.5)*bw+dodge(j),v:data[i][j].v})).filter(q=>!Number.isNaN(q.v));
+      if(pts.length<2)return;g.strokeStyle=S[j];g.lineWidth=2;g.beginPath();
+      pts.forEach((q,k)=>{k?g.lineTo(q.x,Yv(q.v)):g.moveTo(q.x,Yv(q.v))});g.stroke();g.lineWidth=1});
+    cats.forEach((c,i)=>{if(!isDots)data[i].forEach((d,j)=>{if(Number.isNaN(d.v))return;const y=Yv(d.v);let xm;
+      if(mk){xm=M.l+(i+.5)*bw+dodge(j);g.fillStyle=S[j];g.beginPath();g.arc(xm,y,4.2,0,7);g.fill();g.strokeStyle=ink;g.lineWidth=1;g.stroke();
+        hits.push({px:xm,py:y,t:tipOf(c,j,d)})}
+      else{const x=M.l+i*bw+bw*.11+j*inner;xm=x+inner/2;const y0=M.t+ph-(Math.max(lo,0)-lo)/(hi-lo)*ph;const top=Math.min(y,P.zero?y0:M.t+ph),bot=Math.max(y,P.zero?y0:M.t+ph);g.fillStyle=S[j];g.fillRect(x+1,top,inner-2,bot-top);
+        hits.push({x0:x,x1:x+inner,y0:M.t,y1:M.t+ph,t:tipOf(c,j,d)})}
+      if(d.e){g.strokeStyle=ink;g.lineWidth=1.5;const ya=Yv(d.v+d.e),yb=Yv(d.v-d.e);g.beginPath();g.moveTo(xm,ya);g.lineTo(xm,yb);g.moveTo(xm-5,ya);g.lineTo(xm+5,ya);g.moveTo(xm-5,yb);g.lineTo(xm+5,yb);g.stroke();g.lineWidth=1}});
+      if(i%every===0){g.fillStyle=mute;g.textAlign='center';g.textBaseline='top';let lab=String(c);const maxw=bw*every-6;while(g.measureText(lab).width>maxw&&lab.length>3)lab=lab.slice(0,-2)+'…';g.fillText(lab,M.l+i*bw+bw/2,M.t+ph+8)}});
+    if(P.fit){
+      const cn=catNums(P.x,V);
+      if(cn){
+        const xv=new Map();cn.L.forEach((l,k)=>xv.set(l,cn.X[k]));
+        const xs=cats.map(c=>xv.get(c)),sxp=cats.map((c,i)=>M.l+(i+.5)*bw);
+        const step=xs.length>1?xs[1]-xs[0]:1,even=xs.every((v,i)=>i===0||Math.abs(v-xs[i-1]-step)<1e-9);
+        const yrs=P.x==='decade';const out=[];const fr=[];
+        splitL.forEach((l,j)=>{
+          const pts=cats.map((c,i)=>[xv.get(c),data[i][j].v]).filter(q=>Number.isFinite(q[1]));
+          const f=regress(pts);if(!f)return;
+          const sy=xs.map(v=>Yv(f.a+f.b*v));
+          g.save();g.setLineDash([]);g.strokeStyle=ink;g.lineWidth=3.6;g.beginPath();sxp.forEach((x,i)=>{i?g.lineTo(x,sy[i]):g.moveTo(x,sy[i])});g.stroke();
+          g.strokeStyle=S[j];g.lineWidth=2.2;g.stroke();g.restore();
+          const mid=Math.floor(sxp.length/2);
+          hits.unshift({px:sxp[mid],py:sy[mid],t:`fit${splitL[j]===null?'':' for '+splitL[j]}: slope ${pm(f.b,f.seb)}, n = ${f.n}`});
+          fr.push({label:splitL[j]===null?'all readings':P.split+' = '+splitL[j],b:f.b,seb:f.seb,n:f.n,r2:f.r2,resid:f.resid});
+          out.push(`<tr><td>${splitL[j]===null?'all readings':esc(P.split+' = '+splitL[j])}</td>`+
+            `<td class="n">${pm(f.b,f.seb)}${yrs?` <span class="mute">(${pm(f.b*10,f.seb*10)} per decade)</span>`:''}</td>`+
+            `<td class="n">${pm(f.a,f.sea)}</td><td class="n">${f.n}</td><td class="n">${f.r2.toFixed(3)}</td><td class="n">${f.resid.toFixed(3)}</td></tr>`);
+        });
+        $('fitout').innerHTML=out.length?`<div class="scroll" style="margin-top:14px"><table>`+
+          `<thead><tr><th>fitted to</th><th class="n">slope (${esc(P.y)} per ${yrs?'year':esc(P.x)})</th>`+
+          `<th class="n">intercept (${esc(P.y)} at ${yrs?'year 0':esc(P.x)+' = 0'})</th><th class="n">n</th>`+
+          `<th class="n">R&sup2;</th><th class="n">residual SD</th></tr></thead><tbody>${out.join('')}</tbody></table></div>`+
+          `<p class="small mute">Least squares, fitted to the ${out.length>1?'plotted ':''}${P.stat}s shown on the chart \u2014 one point per ${esc(P.x)}, not one per reading, so n is the number of ${esc(P.x)} groups. `+
+          `The &plusmn; figures are standard errors. R&sup2; is the share of the variation in those ${esc(P.stat==='count'?'counts':P.y+' '+P.stat+'s')} the line accounts for; the residual SD is the typical distance of a point from the line.`+
+          (even?'':` The x axis gives every ${esc(P.x)} the same width, and the ones you have selected are not evenly spaced, so the fitted line bends here even though it is straight in ${esc(P.x)} units.`)+`</p>`+recorder():'';
+        lastFit=out.length?{kind:'cat',y:P.y,x:P.x,split:P.split||'',loc:filt.locs.length===1?filt.locs[0]:'',dec:filt.decade||'',y0:filt.a0,y1:filt.a1,rows:fr}:null;
+      }
+    }
+    xLabel(P.x);
+  }
+  if(P.type==='line'){
+    const key=r=>{if(P.agg==='daily')return r.date;if(P.agg==='monthly')return r.date.slice(0,7)+'-15';if(P.agg==='yearly')return r.year+'-07-01';const d=new Date(r.date+'T12:00:00Z');const wd=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-wd);return d.toISOString().slice(0,10)};
+    const series=splitL.map(l=>{const m=new Map();sub(l).forEach(r=>{const k=key(r);const e=m.get(k)||[0,0];if(typeof r[P.y]==='number'&&!Number.isNaN(r[P.y])){e[0]+=r[P.y];e[1]++}m.set(k,e)});return [...m].filter(([,e])=>e[1]).map(([k,e])=>({t:Date.parse(k+'T12:00:00Z'),v:e[0]/e[1],k})).sort((a,b)=>a.t-b.t)});
+    const pts=series.flat();if(!pts.length)return;
+    const t0=Math.min(...pts.map(p=>p.t)),t1=Math.max(...pts.map(p=>p.t));let lo=Math.min(...pts.map(p=>p.v)),hi=Math.max(...pts.map(p=>p.v));
+    if(P.zero)lo=Math.min(0,lo);else{const pad=(hi-lo)*.06||1;lo-=pad;hi+=pad}
+    yAxis(lo,hi,`${P.y} (average per ${P.agg.replace('ly','').replace('dai','day')})`);
+    const X=t=>M.l+(t1===t0?pw/2:(t-t0)/(t1-t0)*pw),Y=v=>M.t+ph-(v-lo)/(hi-lo)*ph;
+    const y0=new Date(t0).getUTCFullYear(),y1=new Date(t1).getUTCFullYear();const step=Math.ceil((y1-y0+1)/Math.max(1,Math.floor(pw/60)));
+    g.fillStyle=mute;g.textAlign='center';g.textBaseline='top';for(let y=y0;y<=y1+1;y+=step){const t=Date.UTC(y,0,1);if(t<t0-1e7||t>t1+1e7)continue;const x=X(t);g.strokeStyle=line;g.beginPath();g.moveTo(x,M.t+ph);g.lineTo(x,M.t+ph+5);g.stroke();g.fillText(y,x,M.t+ph+8)}
+    series.forEach((s,i)=>{g.strokeStyle=S[i];g.fillStyle=S[i];g.lineWidth=1.6;if(P.draw==='lines'){g.beginPath();s.forEach((p,j)=>{const x=X(p.t),y=Y(p.v);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}else s.forEach(p=>{g.fillRect(X(p.t)-1.2,Y(p.v)-1.2,2.4,2.4)});g.lineWidth=1;
+      s.forEach(p=>hits.push({px:X(p.t),py:Y(p.v),t:`${p.k}${splitL[i]!==null?`, ${P.split} = ${splitL[i]}`:''}: ${fmt(p.v,1)}`}))});
+    xLabel('date');
+  }
+  if(P.type==='hist'){
+    const vals=V.map(r=>r[P.y]).filter(v=>typeof v==='number'&&!Number.isNaN(v));if(!vals.length)return;
+    let lo=Math.min(...vals),hi=Math.max(...vals);if(hi===lo)hi=lo+1;const nb=P.bins,w=(hi-lo)/nb;
+    const counts=splitL.map(l=>{const c=new Array(nb).fill(0);const a=sub(l).map(r=>r[P.y]).filter(v=>typeof v==='number'&&!Number.isNaN(v));a.forEach(v=>c[Math.min(nb-1,Math.floor((v-lo)/w))]++);return P.norm?c.map(x=>a.length?x/a.length*100:0):c});
+    const top=Math.max(...counts.flat())*1.06||1;yAxis(0,top,P.norm?'% of readings':'number of readings');
+    const X=v=>M.l+(v-lo)/(hi-lo)*pw,Y=v=>M.t+ph-v/top*ph;
+    counts.forEach((c,i)=>{g.strokeStyle=S[i];g.fillStyle=S[i];g.globalAlpha=splitL.length>1?.22:.85;c.forEach((v,b)=>{g.fillRect(X(lo+b*w)+.5,Y(v),Math.max(1,X(lo+(b+1)*w)-X(lo+b*w)-1),M.t+ph-Y(v))});g.globalAlpha=1;if(splitL.length>1){g.lineWidth=2;g.beginPath();c.forEach((v,b)=>{const xa=X(lo+b*w),xb=X(lo+(b+1)*w);b?g.lineTo(xa,Y(v)):g.moveTo(xa,M.t+ph);g.lineTo(xa,Y(v));g.lineTo(xb,Y(v))});g.lineTo(X(hi),M.t+ph);g.stroke();g.lineWidth=1}
+      c.forEach((v,b)=>hits.push({x0:X(lo+b*w),x1:X(lo+(b+1)*w),y0:M.t,y1:M.t+ph,t:`${P.norm?fmt(v,1)+'% of':fmt(v,0)} ${splitL[i]!==null?`${P.split} = ${splitL[i]} `:''}readings had ${fmt(lo+b*w,1)} to ${fmt(lo+(b+1)*w,1)} ${P.y}`,stack:i}))});
+    const ts=ticks(lo,hi,Math.max(2,Math.floor(pw/90)));g.fillStyle=mute;g.textAlign='center';g.textBaseline='top';ts.forEach(t=>{if(t<lo||t>hi)return;g.fillText(fmtc(P.type==='hist'?P.y:P.sx,t),X(t),M.t+ph+8)});
+    xLabel(P.y);
+  }
+  if(P.type==='scatter'){
+    const ok=r=>typeof r[P.sx]==='number'&&typeof r[P.sy]==='number'&&!Number.isNaN(r[P.sx])&&!Number.isNaN(r[P.sy]);const a=V.filter(ok);if(!a.length)return;
+    let xl=Math.min(...a.map(r=>r[P.sx])),xh=Math.max(...a.map(r=>r[P.sx])),yl=Math.min(...a.map(r=>r[P.sy])),yh=Math.max(...a.map(r=>r[P.sy]));const px=(xh-xl)*.03||1,py=(yh-yl)*.05||1;xl-=px;xh+=px;yl-=py;yh+=py;
+    if(P.vstyle==='bars'&&P.zero){yl=Math.min(0,yl);yh=Math.max(0,yh)}
+    yAxis(yl,yh,P.sy);const X=v=>M.l+(v-xl)/(xh-xl)*pw,Y=v=>M.t+ph-(v-yl)/(yh-yl)*ph;
+    const ts=ticks(xl,xh,Math.max(2,Math.floor(pw/90)));g.fillStyle=mute;g.textAlign='center';g.textBaseline='top';ts.forEach(t=>{if(t<xl||t>xh)return;g.fillText(fmtc(P.type==='hist'?P.y:P.sx,t),X(t),M.t+ph+8)});
+    const meanPerX=l=>{const m=new Map();sub(l).filter(ok).forEach(r=>{const k=r[P.sx];const e=m.get(k)||[0,0];e[0]+=r[P.sy];e[1]++;m.set(k,e)});return [...m].map(([k,e])=>({x:k,y:e[0]/e[1],n:e[1]})).sort((q,w)=>q.x-w.x)};
+    const aggTip=(q,i)=>`${P.sx} = ${fmtc(P.sx,q.x)}${splitL[i]!==null?`, ${P.split} = ${splitL[i]}`:''}: ${P.sy} = ${fmt(q.y,2)}${q.n>1?` (mean of ${q.n} readings)`:''}`;
+    const showDots=P.vstyle==='dots'||P.vstyle==='dots and line';
+    if(showDots)splitL.forEach((l,i)=>{g.fillStyle=S[i];g.globalAlpha=.7;sub(l).filter(ok).forEach(r=>{const x=X(r[P.sx]),y=Y(r[P.sy]);g.beginPath();g.arc(x,y,2.6,0,7);g.fill();hits.push({px:x,py:y,t:`${rowLab(r)}${P.sx} = ${fmtc(P.sx,r[P.sx])}, ${P.sy} = ${fmt(r[P.sy])}`})});g.globalAlpha=1});
+    if(P.vstyle==='line'||P.vstyle==='dots and line')splitL.forEach((l,i)=>{const s=meanPerX(l);if(!s.length)return;
+      g.strokeStyle=S[i];g.lineWidth=1.8;g.beginPath();s.forEach((q,j)=>{j?g.lineTo(X(q.x),Y(q.y)):g.moveTo(X(q.x),Y(q.y))});g.stroke();g.lineWidth=1;
+      if(!showDots)s.forEach(q=>hits.push({px:X(q.x),py:Y(q.y),t:aggTip(q,i)}))});
+    if(P.vstyle==='bars'){
+      const per=splitL.map(l=>meanPerX(l));const nx=new Set(per.flat().map(q=>q.x)).size||1;
+      const slot=pw/nx,gw=slot*.82/splitL.length,zy=0>=yl&&0<=yh?Y(0):0<yl?M.t+ph:M.t,y0=P.zero?zy:M.t+ph;
+      per.forEach((s,i)=>{g.fillStyle=S[i];s.forEach(q=>{const cx=X(q.x)-slot*.41+(i+.5)*gw,y=Y(q.y),top=Math.min(y,y0),bot=Math.max(y,y0);
+        g.fillRect(cx-gw/2,top,Math.max(1,gw-1),Math.max(1,bot-top));
+        hits.push({x0:cx-gw/2,x1:cx+gw/2,y0:M.t,y1:M.t+ph,t:aggTip(q,i)})})});
+    }
+    if(P.avg&&showDots){const nb=P.abins,w=(xh-xl-2*px)/nb,x0=xl+px;splitL.forEach((l,i)=>{const acc=Array.from({length:nb},()=>[0,0]);sub(l).filter(ok).forEach(r=>{const b=Math.min(nb-1,Math.floor((r[P.sx]-x0)/w));acc[b][0]+=r[P.sy];acc[b][1]++});const pts=acc.map((a,b)=>a[1]?{x:x0+(b+.5)*w,y:a[0]/a[1],n:a[1],b}:null).filter(Boolean);g.strokeStyle=ink;g.lineWidth=4;g.beginPath();pts.forEach((p,j)=>{j?g.lineTo(X(p.x),Y(p.y)):g.moveTo(X(p.x),Y(p.y))});g.stroke();g.strokeStyle=S[i];g.lineWidth=2.2;g.stroke();g.lineWidth=1;pts.forEach(p=>{g.fillStyle=S[i];g.beginPath();g.arc(X(p.x),Y(p.y),4.5,0,7);g.fill();g.strokeStyle=ink;g.stroke();hits.unshift({px:X(p.x),py:Y(p.y),t:`average ${P.sy} = ${fmt(p.y,1)} for ${P.sx} ${fmt(x0+p.b*w,1)} to ${fmt(x0+(p.b+1)*w,1)}${splitL[i]!==null?`, ${P.split} = ${splitL[i]}`:''} (n = ${p.n})`})})})}
+    if(P.fit){
+      const out=[];const fr=[];
+      let tnote='';
+      if(P.sx!=='year'&&V.length&&V[0].year!=null){
+        const tf=regress(V.filter(ok).map(r=>[r.year,r[P.sx]]));
+        if(tf&&tf.r2>0.5)tnote=`<b>${esc(P.sx)} tracks the calendar closely here</b> (R&sup2; = ${tf.r2.toFixed(2)} against year), so this line compares two quantities that both change over time. A close fit between two such series does not on its own show that one drives the other. `;
+      }
+      splitL.forEach((l,i)=>{
+        const pts=sub(l).filter(ok).map(r=>[r[P.sx],r[P.sy]]);
+        const f=regress(pts); if(!f)return;
+        g.save();g.setLineDash([]);g.strokeStyle=ink;g.lineWidth=3.6;
+        g.beginPath();g.moveTo(X(f.xmin),Y(f.a+f.b*f.xmin));g.lineTo(X(f.xmax),Y(f.a+f.b*f.xmax));g.stroke();
+        g.strokeStyle=S[i];g.lineWidth=2.2;g.stroke();g.restore();
+        const perDec=P.sx==='year'?` <span class="mute">(${pm(f.b*10,f.seb*10)} per decade)</span>`:'';
+        fr.push({label:splitL[i]===null?'all readings':P.split+' = '+splitL[i],b:f.b,seb:f.seb,n:f.n,r2:f.r2,resid:f.resid});
+        out.push(`<tr><td>${splitL[i]===null?'all readings':esc(P.split+' = '+splitL[i])}</td>`+
+          `<td class="n">${pm(f.b,f.seb)}${perDec}</td><td class="n">${pm(f.a,f.sea)}</td>`+
+          `<td class="n">${f.n}</td><td class="n">${f.r2.toFixed(3)}</td><td class="n">${f.resid.toFixed(3)}</td></tr>`);
+        hits.unshift({px:X((f.xmin+f.xmax)/2),py:Y(f.a+f.b*(f.xmin+f.xmax)/2),
+          t:`fit${splitL[i]===null?'':' for '+splitL[i]}: slope ${pm(f.b,f.seb)}, n = ${f.n}`});
+      });
+      $('fitout').innerHTML=out.length?`<div class="scroll" style="margin-top:14px"><table>`+
+        `<thead><tr><th>fitted to</th><th class="n">slope (${esc(P.sy)} per ${esc(P.sx)})</th>`+
+        `<th class="n">intercept (${esc(P.sy)} at ${esc(P.sx)} = 0)</th><th class="n">n</th>`+
+        `<th class="n">R&sup2;</th><th class="n">residual SD</th></tr></thead><tbody>${out.join('')}</tbody></table></div>`+
+        `<p class="small mute">${tnote}Least squares. The &plusmn; figures are standard errors: roughly, the slope is likely to lie within two of them of the value shown. R&sup2; is the share of the variation in ${esc(P.sy)} the line accounts for; the residual SD is the typical distance of a point from the line, in ${esc(P.sy)} units.`+
+        (P.sx==='year'?` The intercept is what the line gives at year 0, far outside the data.`:'')+`</p>`+recorder():'';
+      lastFit=out.length?{kind:'num',y:P.sy,x:P.sx,split:P.split||'',loc:filt.locs.length===1?filt.locs[0]:'',dec:filt.decade||'',y0:filt.a0,y1:filt.a1,rows:fr}:null;
+    }
+    xLabel(P.sx);
+  }
+  const xLabs=(L,xs,slot,yb)=>{g.fillStyle=mute;g.font='13px Inter, sans-serif';const lab=L.map(l=>{let t=String(l);if(t.length>16)t=t.slice(0,15)+'…';return t});const wide=Math.max(...lab.map(t=>g.measureText(t).width))>slot-4;const every=wide&&slot<16?Math.ceil(16/slot):1;lab.forEach((t,i)=>{if(i%every)return;if(wide){g.save();g.translate(xs[i],yb+8);g.rotate(-Math.PI/4);g.textAlign='right';g.textBaseline='middle';g.fillText(t,0,0);g.restore()}else{g.textAlign='center';g.textBaseline='top';g.fillText(t,xs[i],yb+8)}});g.font='14px Inter, sans-serif'};
+  const meanAt=(a)=>summ(a.map(r=>r[P.y]));
+  if(P.type==='main'){
+    const F=P.factors;if(!F.length){g.fillStyle=mute;g.textAlign='left';g.fillText('Tick at least one variable above.',M.l,M.t+30);return}
+    const grand=meanAt(V);const se=P.sespread==='±1 SE';
+    const pan=F.map(f=>{const B2=axisBins(f,V),L=B2.L;return{f,L,m:L.map(l=>meanAt(V.filter(r=>B2.key(r)===l)))}});
+    const vals=pan.flatMap(p=>p.m.filter(q=>q.n).flatMap(q=>[q.mean-(se?q.se:0),q.mean+(se?q.se:0)])).concat([grand.mean]);
+    let lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*.12||1;lo-=pad;hi+=pad;
+    const Y=v=>M.t+ph-(v-lo)/(hi-lo)*ph,gap=22,pwi=(pw-gap*(F.length-1))/F.length;
+    const ts=ticks(lo,hi,6);g.fillStyle=mute;g.textAlign='right';g.textBaseline='middle';ts.forEach(t=>{if(t<lo||t>hi)return;g.fillText(fmt(t),M.l-8,Y(t))});
+    g.save();g.translate(14,M.t+ph/2);g.rotate(-Math.PI/2);g.textAlign='center';g.fillStyle=ink;g.fillText('mean of '+P.y,0,0);g.restore();
+    pan.forEach((p,k)=>{const x0=M.l+k*(pwi+gap),slot=pwi/p.L.length,xs=p.L.map((_,i)=>x0+(i+.5)*slot);
+      g.strokeStyle=line;ts.forEach(t=>{if(t<lo||t>hi)return;g.beginPath();g.moveTo(x0,Y(t));g.lineTo(x0+pwi,Y(t));g.stroke()});
+      g.strokeStyle=mute;g.beginPath();g.moveTo(x0,M.t);g.lineTo(x0,M.t+ph);g.lineTo(x0+pwi,M.t+ph);g.stroke();
+      g.setLineDash([6,5]);g.strokeStyle=mute;g.beginPath();g.moveTo(x0,Y(grand.mean));g.lineTo(x0+pwi,Y(grand.mean));g.stroke();g.setLineDash([]);
+      g.fillStyle=ink;g.textAlign='center';g.textBaseline='bottom';g.font='600 14px Inter, sans-serif';g.fillText(p.f,x0+pwi/2,M.t-12);g.font='14px Inter, sans-serif';
+      g.strokeStyle=S[0];g.lineWidth=2.2;g.beginPath();let st=false;p.m.forEach((q,i)=>{if(!q.n){st=false;return}st?g.lineTo(xs[i],Y(q.mean)):g.moveTo(xs[i],Y(q.mean));st=true});g.stroke();g.lineWidth=1;
+      p.m.forEach((q,i)=>{if(!q.n)return;if(se){g.strokeStyle=ink;g.beginPath();g.moveTo(xs[i],Y(q.mean-q.se));g.lineTo(xs[i],Y(q.mean+q.se));g.moveTo(xs[i]-4,Y(q.mean-q.se));g.lineTo(xs[i]+4,Y(q.mean-q.se));g.moveTo(xs[i]-4,Y(q.mean+q.se));g.lineTo(xs[i]+4,Y(q.mean+q.se));g.stroke()}
+        g.fillStyle=S[0];g.beginPath();g.arc(xs[i],Y(q.mean),4.5,0,7);g.fill();hits.push({px:xs[i],py:Y(q.mean),t:`${p.f} = ${p.L[i]}: mean ${P.y} ${fmt(q.mean,1)}${se?` ± ${fmt(q.se,1)}`:''} (n = ${q.n})`})});
+      xLabs(p.L,xs,slot,M.t+ph)});
+    hits.push({px:-999,py:-999,t:''});
+    return;
+  }
+  if(P.type==='inter'){
+    const AB=axisBins(P.ia,V),A=AB.L,se=P.sespread==='±1 SE',slot=pw/A.length,xs=A.map((_,i)=>M.l+(i+.5)*slot);
+    const ser=splitL.map(l=>A.map(a=>meanAt(V.filter(r=>AB.key(r)===a&&(l===null||SPX.key(r)===l)))));
+    const vals=ser.flat().filter(q=>q.n).flatMap(q=>[q.mean-(se?q.se:0),q.mean+(se?q.se:0)]);if(!vals.length)return;
+    let lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*.08||1;lo-=pad;hi+=pad;
+    yAxis(lo,hi,'mean of '+P.y);const Y=v=>M.t+ph-(v-lo)/(hi-lo)*ph;
+    ser.forEach((m,j)=>{g.strokeStyle=S[j];g.lineWidth=2.2;g.beginPath();let st=false;m.forEach((q,i)=>{if(!q.n){st=false;return}st?g.lineTo(xs[i],Y(q.mean)):g.moveTo(xs[i],Y(q.mean));st=true});g.stroke();g.lineWidth=1;
+      m.forEach((q,i)=>{if(!q.n)return;if(se){g.strokeStyle=S[j];g.beginPath();g.moveTo(xs[i],Y(q.mean-q.se));g.lineTo(xs[i],Y(q.mean+q.se));g.stroke()}g.fillStyle=S[j];g.beginPath();g.arc(xs[i],Y(q.mean),4,0,7);g.fill();
+        hits.push({px:xs[i],py:Y(q.mean),t:`${P.ia} = ${A[i]}, ${P.ib} = ${splitL[j]}: mean ${P.y} ${fmt(q.mean,1)}${se?` ± ${fmt(q.se,1)}`:''} (n = ${q.n})`})})});
+    xLabs(A,xs,slot,M.t+ph);xLabel(P.ia);
+  }
+  if(P.type==='g3d'){
+    const AX=axisBins(P.ia,V),BX=axisBins(P.ib,V);
+    const A=AX.L.slice(0,12),B=BX.L.slice(0,12);
+    if(!A.length||!B.length){g.fillStyle=mute;g.textAlign='left';g.fillText('No readings match the filters.',M.l,M.t+30);return}
+    const ai=new Map(A.map((v,i)=>[v,i])),bi=new Map(B.map((v,j)=>[v,j]));
+    const sum=A.map(()=>new Array(B.length).fill(0)),cnt=A.map(()=>new Array(B.length).fill(0));
+    V.forEach(r=>{const i=ai.get(AX.key(r)),j=bi.get(BX.key(r)),v=r[P.y];
+      if(i!==undefined&&j!==undefined&&typeof v==='number'&&!Number.isNaN(v)){sum[i][j]+=v;cnt[i][j]++}});
+    const cells=[];
+    for(let i=0;i<A.length;i++)for(let j=0;j<B.length;j++){if(!cnt[i][j])continue;
+      cells.push({i,j,v:sum[i][j]/cnt[i][j],n:cnt[i][j]})}
+    if(!cells.length){g.fillStyle=mute;g.textAlign='left';g.fillText('No readings match the filters.',M.l,M.t+30);return}
+    const zlo=Math.min(...cells.map(c=>c.v)),zhi=Math.max(...cells.map(c=>c.v));
+    const zrng=(zhi-zlo)||Math.abs(zhi)||1;
+    let zb0=zlo-zrng*.12,zt0=zhi+zrng*.06;
+    if(zlo>=0&&zb0<0)zb0=0;
+    if(zhi<=0&&zt0>0)zt0=0;
+    const ts=ticks(zb0,zt0,5);
+    const zbase=Math.min(zb0,ts.length?ts[0]:zb0),ztop=Math.max(zt0,ts.length?ts[ts.length-1]:zt0);
+    const zspan=(ztop-zbase)||1;
+    const zfrac=v=>(v-zbase)/zspan;
+    const az=P.az*Math.PI/180,el=P.el*Math.PI/180,ca=Math.cos(az),sa=Math.sin(az),se=Math.sin(el);
+    const edgeY=ca<=0?-1:1, edgeX=sa<=0?-1:1;
+    const gx=(i)=>-1+2*(i+.5)/A.length,gy=(j)=>-1+2*(j+.5)/B.length;
+    const bw=2/A.length*.74,bh=2/B.length*.74;
+    const raw=(wx,wy,wz)=>{const d=wx*sa+wy*ca;return [wx*ca-wy*sa, d*se-wz, d]};
+    const corners=[[-1,-1],[1,-1],[1,1],[-1,1]];
+    let back=corners[0],bx=1e9;
+    corners.forEach(c=>{const x=raw(c[0],c[1],0)[0];if(x<bx){bx=x;back=c}});
+    const zoff=1.28;
+    const probe=[];
+    for(const sx of[-1.3,1.3])for(const sy of[-1.3,1.3])probe.push(raw(sx,sy,0));
+    cells.forEach(c=>{const x=gx(c.i),y=gy(c.j),hh=zfrac(c.v);
+      [[x-bw/2,y-bh/2],[x+bw/2,y-bh/2],[x+bw/2,y+bh/2],[x-bw/2,y+bh/2]].forEach(q=>probe.push(raw(q[0],q[1],hh)))});
+    probe.push(raw(back[0]*zoff,back[1]*zoff,0),raw(back[0]*zoff,back[1]*zoff,1));
+    for(const u of[-1,1]){probe.push(raw(u,edgeY*1.9,0));probe.push(raw(edgeX*1.9,u,0))}
+    probe.push(raw(0,edgeY*1.9,0),raw(edgeX*1.9,0,0));
+    let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    probe.forEach(q=>{x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])});
+    const padL=104,padR=104,padT=48,padB=96;
+    const sc=Math.min((W-padL-padR)/(x1-x0),(H-padT-padB)/(y1-y0));
+    const ox=padL+(W-padL-padR-(x1-x0)*sc)/2-x0*sc, oy=padT+(H-padT-padB-(y1-y0)*sc)/2-y0*sc;
+    const P3=(wx,wy,wz)=>{const q=raw(wx,wy,wz);return [ox+q[0]*sc, oy+q[1]*sc, q[2]]};
+    const c0=rgbOf(line),c1=rgbOf(resolveColor('--acc'));
+    const mix=(t,f)=>`rgb(${c0.map((v,k)=>Math.round((v+(c1[k]-v)*t)*f)).join(',')})`;
+    const quad=(pts,fill)=>{g.fillStyle=fill;g.beginPath();pts.forEach((q,k)=>k?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.fill();g.stroke()};
+    // ground grid
+    g.strokeStyle=line;g.lineWidth=1;
+    for(let i=0;i<=A.length;i++){const t=-1+2*i/A.length,p1=P3(t,-1,0),p2=P3(t,1,0);
+      g.beginPath();g.moveTo(p1[0],p1[1]);g.lineTo(p2[0],p2[1]);g.stroke()}
+    for(let j=0;j<=B.length;j++){const t=-1+2*j/B.length,p1=P3(-1,t,0),p2=P3(1,t,0);
+      g.beginPath();g.moveTo(p1[0],p1[1]);g.lineTo(p2[0],p2[1]);g.stroke()}
+    // z axis at the back-most vertical corner
+    // bars, far to near
+    cells.sort((p,q)=>P3(gx(p.i),gy(p.j),0)[2]-P3(gx(q.i),gy(q.j),0)[2]);
+    g.lineWidth=1;g.strokeStyle=`rgba(${rgbOf(bgCol).join(',')},.55)`;
+    cells.forEach(c=>{const x=gx(c.i),y=gy(c.j),hgt=zfrac(c.v);
+      const a=x-bw/2,b2=x+bw/2,d=y-bh/2,e2=y+bh/2;
+      const bot=[[a,d],[b2,d],[b2,e2],[a,e2]].map(q=>P3(q[0],q[1],0));
+      const top=[[a,d],[b2,d],[b2,e2],[a,e2]].map(q=>P3(q[0],q[1],hgt));
+      const t=zfrac(c.v);
+      const faces=[[0,1],[1,2],[2,3],[3,0]].map(([u,v2])=>({pts:[bot[u],bot[v2],top[v2],top[u]],
+        dep:(bot[u][2]+bot[v2][2])/2}));
+      faces.sort((p,q)=>p.dep-q.dep);
+      faces.forEach((f,k)=>quad(f.pts,mix(t,k<2?.72:.86)));
+      quad(top,mix(t,1));
+      const mid=P3(x,y,hgt);
+      hits.push({px:mid[0],py:mid[1],t:`${P.ia} = ${A[c.i]}, ${P.ib} = ${B[c.j]}: mean ${P.y} ${fmt(c.v,1)} (n = ${c.n})`})});
+    const zb=P3(back[0]*zoff,back[1]*zoff,0),zt=P3(back[0]*zoff,back[1]*zoff,1);
+    const halo=(t,x,y)=>{g.save();g.lineWidth=3.5;g.strokeStyle=`rgb(${rgbOf(bgCol).join(',')})`;g.strokeText(t,x,y);g.restore();g.fillText(t,x,y)};
+    g.strokeStyle=mute;g.beginPath();g.moveTo(zb[0],zb[1]);g.lineTo(zt[0],zt[1]);g.stroke();
+    g.fillStyle=mute;g.font='13px Inter, sans-serif';g.textAlign='right';g.textBaseline='middle';
+    ts.forEach(t=>{if(t>ztop||t<zbase)return;const q=P3(back[0]*zoff,back[1]*zoff,zfrac(t));
+      g.beginPath();g.moveTo(q[0],q[1]);g.lineTo(q[0]-5,q[1]);g.stroke();halo(fmt(t),q[0]-9,q[1])});
+    g.fillStyle=ink;g.font='600 14px Inter, sans-serif';g.textAlign='center';g.textBaseline='bottom';
+    halo('mean of '+P.y,zt[0],zt[1]-10);
+    g.font='14px Inter, sans-serif';g.textBaseline='middle';
+    // the two base axes, meeting at the origin
+    g.strokeStyle=mute;g.lineWidth=1.6;
+    const o0=P3(-1,-1,0),oxE=P3(1,-1,0),oyE=P3(-1,1,0);
+    g.beginPath();g.moveTo(oxE[0],oxE[1]);g.lineTo(o0[0],o0[1]);g.lineTo(oyE[0],oyE[1]);g.stroke();
+    g.save();g.setLineDash([3,4]);g.strokeStyle=line;
+    const eA=P3(1,edgeY,0),eB=P3(edgeX,1,0);
+    g.beginPath();g.moveTo(P3(-1,edgeY,0)[0],P3(-1,edgeY,0)[1]);g.lineTo(eA[0],eA[1]);
+    g.moveTo(P3(edgeX,-1,0)[0],P3(edgeX,-1,0)[1]);g.lineTo(eB[0],eB[1]);g.stroke();g.restore();
+    g.lineWidth=1;
+    // base labels
+    g.font='13px Inter, sans-serif';g.fillStyle=mute;g.textBaseline='middle';
+    A.forEach((v,i)=>{const q=P3(gx(i),edgeY*1.16,0);let t=String(v);if(t.length>13)t=t.slice(0,12)+'…';
+      g.textAlign=q[0]<W/2?'right':'left';halo(t,q[0],q[1])});
+    B.forEach((v,j)=>{const q=P3(edgeX*1.16,gy(j),0);let t=String(v);if(t.length>13)t=t.slice(0,12)+'…';
+      g.textAlign=q[0]<W/2?'right':'left';halo(t,q[0],q[1])});
+    g.fillStyle=ink;g.font='600 14px Inter, sans-serif';g.textAlign='center';g.textBaseline='alphabetic';
+    const la=P3(0,edgeY*1.86,0),lb=P3(edgeX*1.86,0,0);
+    halo(P.ia,la[0],la[1]+18);halo(P.ib,lb[0],lb[1]+18);
+    g.font='14px Inter, sans-serif';
+    $('legend').innerHTML=(A.length>=12||B.length>=12)?'<span class="mute">Only the first 12 levels of each variable are drawn.</span>':'';
+    return;
+  }
+  g.strokeStyle=mute;g.beginPath();g.moveTo(M.l,M.t);g.lineTo(M.l,M.t+ph);g.lineTo(M.l+pw,M.t+ph);g.stroke();
+}
+let drag3=null;
+$('fig').addEventListener('mousedown',e=>{if(P.type!=='g3d')return;drag3={x:e.clientX,y:e.clientY,az:P.az,el:P.el};tip.style.display='none';e.preventDefault()});
+window.addEventListener('mousemove',e=>{if(!drag3)return;
+  P.az=((drag3.az+(e.clientX-drag3.x)*.45)%360+360)%360;
+  P.el=Math.max(8,Math.min(70,drag3.el-(e.clientY-drag3.y)*.3));
+  const a=$('p_az'),b=$('p_el');if(a)a.value=Math.round(P.az);if(b)b.value=Math.round(P.el);
+  drawPlot()});
+window.addEventListener('mouseup',()=>{drag3=null});
+$('fig').addEventListener('mousemove',e=>{if(drag3)return;const b=$('fig').getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;let best=null,bd=100;
+  for(const h of hits){if(h.x0!=null){if(x>=h.x0&&x<=h.x1&&y>=h.y0&&y<=h.y1){best=h;break}}else{const d=(h.px-x)**2+(h.py-y)**2;if(d<bd){bd=d;best=h}}}
+  if(best){tip.style.display='block';tip.textContent=best.t;const tw=tip.offsetWidth;tip.style.left=Math.min(b.width-tw-6,Math.max(6,x+12))+'px';tip.style.top=Math.max(6,y-34)+'px'}else tip.style.display='none'});
+$('fig').addEventListener('mouseleave',()=>tip.style.display='none');
+const ro=new ResizeObserver(()=>drawPlot());ro.observe($('fig'));
+
+/* ---------- investigation: stages 2 to 4 ---------- */
+function recorder(){
+  if(!state.hyp)return '';
+  return `<div class="row" style="margin-top:14px;align-items:center;gap:10px">`+
+    `<button class="b" id="recfit">Record this result</button>`+
+    `<label for="recside">file under<select id="recside">`+
+    `<option value="other">the side I was assigned</option>`+
+    `<option value="mine">my own position</option></select></label>`+
+    `<span id="recmsg" class="mute small"></span></div>`;
+}
+document.addEventListener('click',e=>{
+  const t=e.target;if(!t||t.id!=='recfit')return;
+  const msg=$('recmsg');
+  if(!lastFit||!lastFit.rows.length){if(msg)msg.textContent='No fit on screen to record.';return}
+  const side=$('recside')?$('recside').value:'other';
+  const f=JSON.parse(JSON.stringify(lastFit));let added=0;
+  if(f.split==='location'&&f.rows.length>1){
+    f.rows.forEach((rw,k)=>{const one=Object.assign({},f,{rows:[rw],split:'',loc:String(rw.label).replace(/^location = /,'')});
+      state.records.push(Object.assign({id:'r'+Date.now().toString(36)+k,side:side},one));added++});
+  }else{state.records.push(Object.assign({id:'r'+Date.now().toString(36),side:side},f));added=1}
+  save();if(msg)msg.textContent=`Recorded ${added>1?added+' fits':'it'}. ${state.records.length} result${state.records.length>1?'s':''} on file.`;
+});
+
+function fitFor(spec,opts){
+  const sel=rows.filter(r=>r.year>=opts.y0&&r.year<=opts.y1&&(!opts.loc||r.location===opts.loc)&&(!opts.dec||r.decade===opts.dec));
+  if(!sel.length)return null;
+  if(spec.kind==='num'){
+    const ok=r=>typeof r[spec.x]==='number'&&typeof r[spec.y]==='number'&&!Number.isNaN(r[spec.x])&&!Number.isNaN(r[spec.y]);
+    return regress(sel.filter(ok).map(r=>[r[spec.x],r[spec.y]]));
+  }
+  const cn=catNums(spec.x,sel);if(!cn)return null;
+  const xv=new Map();cn.L.forEach((l,k)=>xv.set(l,cn.X[k]));
+  const pts=[];
+  cn.L.forEach(l=>{const a=sel.filter(r=>r[spec.x]===l);const sm=summ(a.map(r=>r[spec.y]));if(sm.n)pts.push([xv.get(l),sm.mean])});
+  return regress(pts);
+}
+const win=r=>`${r.y0}–${r.y1}`;
+const place=r=>r.loc||(r.split?'all six, split by '+r.split:'all six');
+const bindTA=(id,key)=>{const e=$(id);if(!e)return;e.value=state.work[key]||'';e.oninput=()=>{state.work[key]=e.value;save()}};
+
+function renderOther(){
+  if(!state.hyp)return;
+  const side=other();
+  $('otherbrief').innerHTML=`<div class="panel" style="max-width:860px">`+
+    `<p style="margin-top:0">You locked in that ${esc(POSTXT[state.hyp.pos])}. Your assignment is the opposite.</p>`+
+    `<p><b>Build the strongest honest case that ${esc(POSTXT[side])}.</b></p>`+
+    `<p class="small">This is a question the file can answer, if you ask it carefully. Fourteen places, 131 years, and a year filter you can set to anything you like.</p>`+
+    `<p class="small">Use only this data. Every number real, every plot reproducible by someone else. You may choose any years, any place, any columns. You may not invent a figure or describe a plot you did not make.</p>`+
+    `<p class="small mute">You are not being asked to change your mind. You are being asked to find out how good a case the other side can build out of the same file you have.</p></div>`;
+  const rs=state.records;
+  $('reclist').className=rs.length?'':'mute';
+  $('reclist').innerHTML=rs.length?`<div class="scroll"><table><thead><tr>`+
+    `<th>Fit</th><th>Years</th><th>Place</th><th class="n">slope</th><th class="n">n</th><th class="n">R&sup2;</th><th>Filed under</th><th></th></tr></thead><tbody>`+
+    rs.map(r=>{const m=r.rows[0];return `<tr><td>${esc(r.y)} vs ${esc(r.x)}${r.split?` <span class="mute">by ${esc(r.split)}</span>`:''}</td>`+
+      `<td>${esc(win(r))}</td><td>${esc(place(r))}${r.dec?' &middot; '+esc(r.dec):''}</td>`+
+      `<td class="n">${esc(pm(m.b,m.seb))}</td><td class="n">${m.n}</td><td class="n">${m.r2.toFixed(3)}</td>`+
+      `<td>${r.side==='mine'?'my own position':'the assigned side'}</td>`+
+      `<td><button class="b" data-drop="${esc(r.id)}">Remove</button></td></tr>`}).join('')+
+    `</tbody></table></div>`:'Nothing recorded yet.';
+  bindTA('ocase','ocase');bindTA('oleft','oleft');
+}
+$('reclist').addEventListener('click',e=>{const b=e.target.closest('[data-drop]');if(!b)return;
+  state.records=state.records.filter(r=>r.id!==b.dataset.drop);save();renderOther()});
+
+function renderStress(){
+  const rs=state.records;
+  if(!rs.length){$('stresslist').className='mute';$('stresslist').innerHTML='Record a result in stage 2 first.';return}
+  $('stresslist').className='';
+  $('stresslist').innerHTML=rs.map(r=>{
+    const m=r.rows[0],spec={kind:r.kind,y:r.y,x:r.x};
+    const full=fitFor(spec,{y0:1895,y1:2025,loc:r.loc});
+    const per=LOC.map(l=>({l,f:fitFor(spec,{y0:r.y0,y1:r.y1,loc:l})})).filter(q=>q.f);
+    const same=per.filter(q=>Math.sign(q.f.b)===Math.sign(m.b)).length;
+    const ratio=m.seb>0?Math.abs(m.b)/m.seb:0;
+    const strong=per.filter(q=>q.f.seb>0&&Math.abs(q.f.b)/q.f.seb>2).length;
+    const flip=full&&Math.sign(full.b)!==Math.sign(m.b);
+    let clock=null;
+    if(r.x!=='year'&&r.x!=='decade'){
+      const sel=rows.filter(q=>q.year>=r.y0&&q.year<=r.y1&&(!r.loc||q.location===r.loc));
+      const cf=regress(sel.filter(q=>typeof q[r.x]==='number'&&!Number.isNaN(q[r.x])).map(q=>[q.year,q[r.x]]));
+      if(cf&&cf.r2>0.5)clock=cf.r2;
+    }
+    return `<div class="panel" style="max-width:900px;margin-bottom:18px">`+
+      `<p style="margin-top:0"><b>${esc(r.y)} vs ${esc(r.x)}</b> &middot; ${esc(win(r))} &middot; ${esc(place(r))}`+
+      `<span class="mute small"> &mdash; filed under ${r.side==='mine'?'my own position':'the assigned side'}</span></p>`+
+      `<div class="scroll"><table><thead><tr><th>Test</th><th class="n">Result</th><th>What it means</th></tr></thead><tbody>`+
+      `<tr><td>As you recorded it</td><td class="n">${esc(pm(m.b,m.seb))}</td>`+
+      `<td>The slope is ${ratio.toFixed(1)} times its own standard error.${ratio<2?' Below 2, which means this window cannot distinguish it from no trend at all.':''}</td></tr>`+
+      (full?`<tr><td>Same fit, full 1895&ndash;2025</td><td class="n">${esc(pm(full.b,full.seb))}</td>`+
+        `<td>${flip?'<b>The sign reverses</b> when the window opens up.':'Same sign as your result.'} n goes from ${m.n} to ${full.n}.</td></tr>`:'')+
+      `<tr><td>Same window, each of the ${per.length} places</td><td class="n">${same} of ${per.length}</td>`+
+      `<td>agree in sign with your result. ${strong} of ${per.length} are more than two standard errors from zero.</td></tr>`+
+      (clock!==null?`<tr><td>Is ${esc(r.x)} a clock?</td><td class="n">R&sup2; = ${clock.toFixed(2)}</td>`+
+        `<td><b>${esc(r.x)} is largely predictable from the calendar.</b> Holding up across places and windows shows this fit is not a fluke. It cannot show that ${esc(r.x)} is what moved ${esc(r.y)}, because any other quantity that rose over the same years would pass these same two tests.</td></tr>`:'')+
+      `</tbody></table></div>`+
+      `<div class="row" style="margin-top:12px"><label for="v_${esc(r.id)}">My verdict`+
+      `<select id="v_${esc(r.id)}" data-v="${esc(r.id)}">`+
+      ['(not yet)','It held up','It moved when the window moved','Not sure'].map(o=>`<option${(state.work['v_'+r.id]||'(not yet)')===o?' selected':''}>${o}</option>`).join('')+
+      `</select></label></div></div>`;
+  }).join('');
+  document.querySelectorAll('[data-v]').forEach(e=>e.onchange=()=>{state.work['v_'+e.dataset.v]=e.value;save()});
+}
+
+function renderStands(){
+  if(!state.hyp)return;
+  $('wchange').innerHTML=`<b>You wrote:</b> ${esc(state.hyp.change)}`;
+  ['wsurv','wfail','woutside','wmind'].forEach(id=>bindTA(id,id));
+}
+function allText(){
+  const h=state.hyp;if(!h)return '';
+  const L=[];
+  L.push('IS THE PLANET WARMING? — MY INVESTIGATION');
+  L.push('');
+  L.push('1. MY POSITION (locked '+new Date(h.time).toLocaleString()+')');
+  L.push('I think '+POSTXT[h.pos]+'.');
+  L.push(h.text);
+  L.push('My prediction: '+sgn(h.num,1)+' °F over 100 years.');
+  L.push('What would change my mind: '+h.change);
+  L.push('');
+  L.push('2. THE SIDE I WAS ASSIGNED: '+POSTXT[other()]);
+  if(state.records.length){
+    L.push('Results I recorded:');
+    state.records.forEach(r=>{const m=r.rows[0];
+      L.push('  - '+r.y+' vs '+r.x+', '+win(r)+', '+place(r)+': slope '+pm(m.b,m.seb)+', n = '+m.n+', R2 = '+m.r2.toFixed(3)+
+        ' ['+(r.side==='mine'?'my own position':'the assigned side')+']'+
+        (state.work['v_'+r.id]&&state.work['v_'+r.id]!=='(not yet)'?' -> '+state.work['v_'+r.id]:''))});
+  }
+  L.push('');
+  L.push('The case in my own words:');L.push(state.work.ocase||'(not written)');
+  L.push('');
+  L.push('What I had to leave out:');L.push(state.work.oleft||'(not written)');
+  L.push('');
+  L.push('4. WHAT STANDS');
+  L.push('What this data supports regardless:');L.push(state.work.wsurv||'(not written)');
+  L.push('');
+  L.push('What did not survive:');L.push(state.work.wfail||'(not written)');
+
+  L.push('');
+  L.push('What would settle the rest:');L.push(state.work.woutside||'(not written)');
+  L.push('');
+  L.push('Did I see what would change my mind?');L.push(state.work.wmind||'(not written)');
+  return L.join('\n');
+}
+$('copyall').onclick=async()=>{const t=allText();
+  try{await navigator.clipboard.writeText(t);$('copiedall').textContent='Copied.'}
+  catch(e){const b=$('allbox');b.style.display='block';b.value=t;b.select();$('copiedall').textContent='Select the text below and copy it.'}};
+
+/* load */
+try{
+  rows=RAW.map(r=>({year:r[0],decade:Math.floor(r[0]/10)*10+'s',location:LOCN[r[1]],
+    temp_f:r[2],anomaly_f:r[3]}));
+  if(!rows.length)throw Error('no rows found');
+  $('nrows').textContent=rows.length.toLocaleString();
+  state.calc=state.calc.filter(c=>{try{applyCalc(c);return true}catch(e){return false}});
+  buildStripes();hReady();buildFilters();buildControls();renderHyp();refresh();show(state.hyp?'plot':'about');
+}catch(e){$('predbar').innerHTML=`<p class="err">The data could not be read (${esc(e.message)}).</p>`;hReady();renderHyp();show('about')}
+}
+</script>
+</body>
+</html>
